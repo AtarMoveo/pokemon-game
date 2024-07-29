@@ -1,3 +1,9 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: MulishRegular, Arial, sans-serif;
+
+  body {
+
+    display: grid;
+    justify-items: start;
+  }
 }

@@ -1,0 +1,24 @@
+import { createGlobalStyle } from 'styled-components';
+import mulishRegular from '../../style/fonts/mulish/Mulish-Regular.ttf';
+import mulishMedium from '../../style/fonts/mulish/Mulish-Medium.ttf';
+import mulishBold from '../../style/fonts/mulish/Mulish-Bold.ttf';
+import robotoRegular from '../../style/fonts/roboto/Roboto-Regular.ttf';
+
+export const GlobalStyles = createGlobalStyle`
+    @font-face {
+        font-family: 'MuilshRegular';
+        src: url(${mulishRegular}) format('truetype');
+    }
+    @font-face {
+        font-family: 'MuilshMedium';
+        src: url(${mulishMedium}) format('ttf');
+    }
+    @font-face {
+        font-family: 'MuilshBold';
+        src: url(${mulishBold}) format('ttf');
+    }
+    @font-face {
+        font-family: 'RobotoRegular';
+        src: url(${robotoRegular}) format('ttf');
+    }
+`
