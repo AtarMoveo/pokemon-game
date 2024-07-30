@@ -4,7 +4,7 @@ function App() {
 
   return (<>
     <GlobalStyles />
-    <h1>Pokemon Game</h1>  
+    <h1>Pokemon Game</h1> 
   </>
   )
 }

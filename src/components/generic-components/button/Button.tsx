@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
-import { colors } from '../../setup/constants';
+import { colors } from '../../../assets/style/setup/constants'
 
 type ButtonType = 'primary' | 'secondary' | 'secondary-grey' | 'tertiary' | 'tertiary-grey'
 type Size = 'sm' | 'md' | 'lg'

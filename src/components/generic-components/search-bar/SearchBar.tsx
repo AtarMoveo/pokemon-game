@@ -1,8 +1,8 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-import { colors } from "../../setup/constants"
-import { SearchIcon, XIcon } from "../../../svg/svg"
+import { colors } from "../../../assets/style/setup/constants"
+import { SearchIcon, XIcon } from "../../../assets/svg/svg"
 
 
 interface SearchBarProps {

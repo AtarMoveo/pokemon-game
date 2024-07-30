@@ -2,8 +2,8 @@ import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import { colors, mulishFont, textStyle } from '../../setup/constants';
-import { ArrowDown } from '../../../svg/svg';
+import { colors, mulishFont, textStyle } from "../../../assets/style/setup/constants";
+import { ArrowDown } from "../../../assets/svg/svg";
 
 interface SortProps {
   options: string[]
