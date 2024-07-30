@@ -1,7 +1,11 @@
+import { GlobalStyles } from "./assets/style/setup/globalStyles"
+
 function App() {
 
-  return (
-    <h1>Pokemon Game</h1>
+  return (<>
+    <GlobalStyles />
+    <h1>Pokemon Game</h1>  
+  </>
   )
 }
 

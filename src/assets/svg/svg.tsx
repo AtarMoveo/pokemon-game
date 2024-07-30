@@ -11,7 +11,7 @@ export function XIcon() {
 }
 
 export function ArrowDown() {
-   return <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-   <path d="M2.5132 4.66667L1.3332 5.84667L7.9332 12.4467L14.5332 5.84667L13.3532 4.66667L7.9332 10.0867L2.5132 4.66667Z" fill="#44484C"/>
+   return <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+   <path d="M2.5132 4.66667L1.3332 5.84667L7.9332 12.4467L14.5332 5.84667L13.3532 4.66667L7.9332 10.0867L2.5132 4.66667Z"/>
    </svg>   
 }
