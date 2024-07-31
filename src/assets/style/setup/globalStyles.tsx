@@ -11,14 +11,14 @@ export const GlobalStyles = createGlobalStyle`
     }
     @font-face {
         font-family: 'MuilshMedium';
-        src: url(${mulishMedium}) format('ttf');
+        src: url(${mulishMedium}) format('truetype');
     }
     @font-face {
         font-family: 'MuilshBold';
-        src: url(${mulishBold}) format('ttf');
+        src: url(${mulishBold}) format('truetype');
     }
     @font-face {
         font-family: 'RobotoRegular';
-        src: url(${robotoRegular}) format('ttf');
+        src: url(${robotoRegular}) format('truetype');
     }
 `

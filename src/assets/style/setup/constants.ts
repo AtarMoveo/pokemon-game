@@ -9,7 +9,8 @@ export const colors = {
         250: '#71787F',
         300: '#5A6066',
         400: '#44484C',
-        500: '#2D3033'
+        500: '#2D3033',
+        black: '#000000'
     },
     primary: {
         50: '#EBEFF6',
@@ -29,16 +30,10 @@ export const colors = {
 }
 
 // FONTS //
-export const mulishFont = {
-    regular: {
-        fontFamily: 'MuilshRegular ,Arial, sans-serif'
-    },
-    medium: {
-        fontFamily: 'MuilshMedium ,Arial, sans-serif'
-    },
-    bold: {
-        fontFamily: 'MuilshRegular ,Arial, sans-serif'
-    }
+export const primaryFont = {
+    regular: 'MuilshRegular ,Arial, sans-serif',
+    medium: 'MuilshMedium ,Arial, sans-serif',
+    bold: 'MuilshBold, MuilshRegular ,Arial, sans-serif'
 }
 
 // TEXT STYLE //
