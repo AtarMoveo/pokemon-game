@@ -1,9 +1,12 @@
-:root {
+body {
+  width: 100dvw;
+  height: 100dvh;
+  margin: 0;
   font-family: MulishRegular, Arial, sans-serif;
+  background-color: #F2F5F7;
+}
 
-  body {
-
-    display: grid;
-    justify-items: start;
-  }
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
 }

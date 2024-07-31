@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode, SyntheticEvent, useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
-import { colors, primaryFont, textStyle } from '../../../assets/style/setup/constants';
+import { colors, font, textStyle } from '../../../assets/style/setup/constants';
 
 interface TabItem {
     label: string
@@ -45,12 +45,12 @@ export function GenericTabs({ tabs }: GenericTabsProps) {
                         sx={{
                             gap: '8px',
                             // paddingInline: '0',
-                            fontFamily: primaryFont.regular,
+                            fontFamily: font.primary.regular,
                             ...textStyle.body,
                             textTransform: 'none',
                             color: colors.neutrals.black,
                             '&.Mui-selected': {
-                                fontFamily: primaryFont.bold,
+                                fontFamily: font.primary.bold,
                                 color: colors.neutrals.black,
                             },
                             '&:hover': {

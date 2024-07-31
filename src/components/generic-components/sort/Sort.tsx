@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import { colors, primaryFont, textStyle } from "../../../assets/style/setup/constants";
+import { colors, font, textStyle } from "../../../assets/style/setup/constants";
 import { ArrowDown } from "../../../assets/svg/svg";
 
 interface SortProps {
@@ -58,7 +58,7 @@ export function Sort({ options }: SortProps) {
         sx: {
           '& .MuiAutocomplete-option': {
             color: colors.neutrals[500], // Change the text color of the options
-            fontFamily: primaryFont.regular,
+            fontFamily: font.primary.regular,
             ...textStyle.body,
             '&.Mui-focused': {
               backgroundColor: colors.neutrals[100], // Change the background color when focused

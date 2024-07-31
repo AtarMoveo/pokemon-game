@@ -30,23 +30,29 @@ export const colors = {
 }
 
 // FONTS //
-export const primaryFont = {
-    regular: 'MuilshRegular ,Arial, sans-serif',
-    medium: 'MuilshMedium ,Arial, sans-serif',
-    bold: 'MuilshBold, MuilshRegular ,Arial, sans-serif'
+export const font = {
+    primary: {
+        regular: 'MuilshRegular ,Arial, sans-serif',
+        medium: 'MuilshMedium ,Arial, sans-serif',
+        bold: 'MuilshBold, MuilshRegular ,Arial, sans-serif'
+    },
+    secondary: { // Buttons
+        regular: 'RobotoRegular, MuilshRegular ,Arial, sans-serif',
+        bold: 'RobotoBold, MuilshRegular ,Arial, sans-serif'
+    }
 }
 
 // TEXT STYLE //
 export const textStyle = {
-    xLarge: {
+    xLargeHeading: {
         fontSize: '1.75rem',
         lineHeight: '2.31rem'
     },
-    large: {
+    largeHeading: {
         fontSize: '1.5rem',
         lineHeight: '2.125rem'
     },
-    medium: {
+    mediumHeading: {
         fontSize: '1.125rem',
         lineHeight: '1.6875rem'
     },
