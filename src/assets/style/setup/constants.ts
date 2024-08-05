@@ -10,10 +10,12 @@ export const colors = {
         300: '#5A6066',
         400: '#44484C',
         500: '#2D3033',
-        black: '#000000'
+        black: '#000000',
+
     },
     primary: {
         50: '#EBEFF6',
+        60: '#EBEFF699', // primary[50] 60%
         100: '#B1BDDB',
         200: '#627BB8',
         300: '#3B5AA6',
@@ -73,3 +75,13 @@ export const textStyle = {
         lineHeight: '1rem'
     },
 } 
+
+// TABLE SIZE //
+export const tableSize = {
+    header: {
+        height: '3rem'
+    },
+    body: {
+        height: '4.5rem'
+    }
+}
