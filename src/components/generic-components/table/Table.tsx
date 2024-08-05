@@ -6,6 +6,7 @@ import {
 import { Dispatch, SetStateAction } from 'react';
 import { BasicPokemon } from '../../../data/types/pokemon';
 import { tableStyles } from './styles';
+import { colors, font, textStyle } from '../../../assets/style/setup/constants';
 
 interface Column {
   id: string
@@ -71,35 +72,41 @@ const GenericTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} align="center">
-                  <CircularProgress />
-                </TableCell>
-              </TableRow>
-            ) : (
-              rows.map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ maxWidth: column.maxWidth }}
-                      sx={{
-                        ...tableStyles.bodyCell,
-                        padding: column.id === 'image' ? '0.5rem 1rem' : (
-                          ['name', 'id', 'description'].includes(column.id)
-                            ? '1rem 2.5rem 1rem 0'
-                            : '1rem 1rem 1rem 0'
-                        ),
-                      }}
-                    >
-                      {renderTableCell(column, (row as any)[column.id])}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            )}
+            {loading && <TableRow>
+              <TableCell colSpan={columns.length} align="center">
+                <CircularProgress />
+              </TableCell>
+            </TableRow>}
+            {!loading && rows.length === 0 ?
+              <TableRow><TableCell colSpan={columns.length} align="center" height="260px" 
+              sx={{ fontFamily: font.primary.regular,
+                ...textStyle.mediumHeading,
+                color: colors.neutrals[350]}}
+              >
+                No Pokemons exist
+              </TableCell></TableRow> : (
+                rows.map((row) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ maxWidth: column.maxWidth }}
+                        sx={{
+                          ...tableStyles.bodyCell,
+                          padding: column.id === 'image' ? '0.5rem 1rem' : (
+                            ['name', 'id', 'description'].includes(column.id)
+                              ? '1rem 2.5rem 1rem 0'
+                              : '1rem 1rem 1rem 0'
+                          ),
+                        }}
+                      >
+                        {renderTableCell(column, (row as any)[column.id])}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              )}
           </TableBody>
         </Table>
       </TableContainer>

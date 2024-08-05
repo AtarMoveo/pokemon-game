@@ -1,7 +1,7 @@
 import { useState } from "react"
 import styled from "styled-components"
 
-import { colors } from "../../../assets/style/setup/constants"
+import { colors, font } from "../../../assets/style/setup/constants"
 import { SearchIcon, XIcon } from "../../../assets/svg/svg"
 
 
@@ -14,7 +14,6 @@ interface SearchBarProps {
 const StyledInputWrapper = styled.div<{ value: string, isFiltered: boolean }>`
     display: grid;
     grid-template-columns: auto 1fr auto;
-    align-items: center;
     gap: 0.5rem;
     
     width: 17rem;
@@ -54,10 +53,12 @@ const StyledInputWrapper = styled.div<{ value: string, isFiltered: boolean }>`
     font-size: 0.875rem;
     line-height: 1.375rem;
     padding: 0;
+    background: transparent;
 }
 
     ::placeholder {
         color: ${colors.neutrals[250]};
+        font-family: ${font.secondary.regular};
     }
 
     svg {
@@ -83,6 +84,7 @@ export const SearchBar = ({ onChange, placeholder = 'Search', isFiltered = false
         onChange(newValue)
     }
 
+    console.log(value)
     return <StyledInputWrapper value={value} isFiltered={isFiltered}>
         <SearchIcon></SearchIcon>
         <input
@@ -91,7 +93,9 @@ export const SearchBar = ({ onChange, placeholder = 'Search', isFiltered = false
             onChange={handleChange}
             placeholder={placeholder}
         />
-        {isFiltered && <button className="clean-btn" onClick={() => (setValue(''))}>
+        {isFiltered && <button className="clean-btn" onClick={() => {
+            (setValue('')); onChange('')
+        }}>
             <XIcon></XIcon>
         </button>
         }

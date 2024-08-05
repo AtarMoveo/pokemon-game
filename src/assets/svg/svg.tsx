@@ -17,7 +17,7 @@ export function ArrowDown() {
 }
 
 export function ListIcon() {
-   return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+   return <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <mask id="mask0_258_1193" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
          <rect width="24" height="24" fill="#D9D9D9" />
       </mask>
@@ -28,7 +28,7 @@ export function ListIcon() {
 }
 
 export function CardsIcon() {
-   return <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H2ZM2 7H6V2H2V7ZM8 7H12V2H8V7ZM14 7H18V2H14V7ZM6 14V9H2V14H6ZM8 14H12V9H8V14ZM14 14H18V9H14V14Z" fill="#1C1B1F" />
+   return <svg width="20" height="16" viewBox="0 0 20 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H2ZM2 7H6V2H2V7ZM8 7H12V2H8V7ZM14 7H18V2H14V7ZM6 14V9H2V14H6ZM8 14H12V9H8V14ZM14 14H18V9H14V14Z" />
    </svg>
 }
