@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { BasicPokemon } from '../../../data/types/pokemon';
-import { tableStyles } from './styles';
+import { getColumnPadding, tableStyles } from './styles';
 
 interface Column {
   id: string
@@ -87,11 +87,7 @@ const GenericTable = ({
                       style={{ maxWidth: column.maxWidth }}
                       sx={{
                         ...tableStyles.bodyCell,
-                        padding: column.id === 'image' ? '0.5rem 1rem' : (
-                          ['name', 'id', 'description'].includes(column.id)
-                            ? '1rem 2.5rem 1rem 0'
-                            : '1rem 1rem 1rem 0'
-                        ),
+                        padding: getColumnPadding(column.id),
                       }}
                     >
                       {renderTableCell(column, (row as any)[column.id])}
