@@ -32,18 +32,22 @@ async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: numb
 function convertToBasicPokemons(pokemons: Pokemon[]): BasicPokemon[] {
     return pokemons.map((pokemon: Pokemon): BasicPokemon => {
         return {
-            image: pokemon.image.thumbnail,
+            image: pokemon.image.hires,
+            thumbnail: pokemon.image.thumbnail,
             name: pokemon.name.english,
             id: pokemon.id,
             description: pokemon.description,
             powerLevel: pokemon.base?.Attack,
-            hpLevel: pokemon.base?.HP
+            hpLevel: pokemon.base?.HP,
+            height: pokemon.profile.height,
+            weight: pokemon.profile.weight,
+            type: pokemon.type
         }
     })
 }
 
 const tableColumns = [
-    { id: 'image', label: '', minWidth: 35 },
+    { id: 'thumbnail', label: '', minWidth: 35 },
     { id: 'name', label: 'Pokemon name' },
     { id: 'id', label: 'ID', minWidth: 35 },
     { id: 'description', label: 'Description', maxWidth: 545 },

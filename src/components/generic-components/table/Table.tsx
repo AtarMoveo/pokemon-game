@@ -25,10 +25,11 @@ interface GenericTableProps {
   totalRows: number
   rowsPerPage: number
   page: number
+  setSelectedPokemon: Dispatch<SetStateAction<BasicPokemon | null>>
 }
 
 const GenericTable = ({
-  columns, rows, setPage, setRowsPerPage, loading, totalRows, rowsPerPage, page
+  columns, rows, setPage, setRowsPerPage, loading, totalRows, rowsPerPage, page, setSelectedPokemon
 }: GenericTableProps) => {
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -41,7 +42,7 @@ const GenericTable = ({
   }
 
   const renderTableCell = (column: Column, value: any) => {
-    if (column.id === 'image') {
+    if (column.id === 'thumbnail') {
       return (
         <img
           src={value}
@@ -86,7 +87,8 @@ const GenericTable = ({
                 No Pokemons exist
               </TableCell></TableRow> : (
                 rows.map((row) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id} 
+                  onClick={()=>setSelectedPokemon(row)} sx={{cursor: 'pointer'}}>
                     {columns.map((column) => (
                       <TableCell
                         key={column.id}

@@ -40,9 +40,13 @@ export interface BasicPokemon {
     id: number
     name: string
     image: string
+    thumbnail: string
     description: string
     powerLevel: number
     hpLevel: number
+    height: string
+    weight: string
+    type: string[]
 }
 
 export interface SortBy {
