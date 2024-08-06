@@ -40,3 +40,10 @@ export const tableStyles = {
         },
     },
 }
+
+export function getColumnPadding(columnId: string): string {
+    return columnId === 'image' ? '0.5rem 1rem' : (
+      ['name', 'id', 'description'].includes(columnId)
+        ? '1rem 2.5rem 1rem 0'
+        : '1rem 1rem 1rem 0')
+  }

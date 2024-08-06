@@ -1,22 +1,33 @@
 export interface Pokemon {
     id: number
-    name: { english: string; japanese: string; chinese: string; french: string }
+    name: PokemonName
     type: string[]
     base: {HP: number, Attack: number, Defense: number }
     species: string
     description: string
     evolution?: { prev: [string, string] }
-    profile: {
-        height: string
-        weight: string
-        gender: string
-        ability: [string, string][]
-    }
-    image: {
-        sprite: string
-        thumbnail: string
-        hires: string
-    }
+    profile: PokemonProfile
+    image: PokemonImage
+}
+
+interface PokemonName {
+    english: string
+    japanese: string
+    chinese: string
+    french: string
+}
+
+interface PokemonProfile {
+    height: string
+    weight: string
+    gender: string
+    ability: [string, string][]
+}
+
+interface PokemonImage {
+    sprite: string
+    thumbnail: string
+    hires: string
 }
 
 export interface BasicPokemon {
