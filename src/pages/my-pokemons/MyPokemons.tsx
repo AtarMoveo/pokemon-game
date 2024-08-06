@@ -1,9 +1,11 @@
-import { StyledPage } from "../styles";
+import { useState } from "react";
+import { PokemonsTable } from "../pokemons-table/PokemonsTable";
 
 export function MyPokemons() {
-    return <StyledPage>
-        <div className="main-container">
-            <h1 className="main-header">My Pokemons</h1>
-        </div>
-    </StyledPage>
+    const [userId, setUserId] = useState('123')
+
+    return <PokemonsTable
+        title='My Pokemons'
+        userId={userId}>
+    </PokemonsTable>
 }

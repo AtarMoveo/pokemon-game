@@ -2,7 +2,7 @@ export interface Pokemon {
     id: number
     name: PokemonName
     type: string[]
-    base: {HP: number, Attack: number, Defense: number }
+    base: PokemonBase
     species: string
     description: string
     evolution?: { prev: [string, string] }
@@ -28,6 +28,12 @@ interface PokemonImage {
     sprite: string
     thumbnail: string
     hires: string
+}
+
+interface PokemonBase {
+    HP: number
+    Attack: number
+    Defense: number
 }
 
 export interface BasicPokemon {

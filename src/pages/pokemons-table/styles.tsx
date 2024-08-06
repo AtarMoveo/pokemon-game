@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors, font, textStyle } from "../assets/style/setup/constants";
-import { layout } from "../assets/style/basics/layout";
+import { colors, font, textStyle } from "../../assets/style/setup/constants";
+import { layout } from "../../assets/style/basics/layout";
 
 export const StyledPage = styled.section`
     ${layout.main}

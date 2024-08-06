@@ -1,8 +1,16 @@
 import { Pokemon, BasicPokemon, SortBy, SortOption } from "../data/types/pokemon";
+import { userService } from "./user.service";
 
-async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: number, rowsPerPage: number): Promise<{ rows: BasicPokemon[], total: number }> {
+async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: number, rowsPerPage: number, userId: string | undefined):
+    Promise<{ rows: BasicPokemon[], total: number }> {
+
     const response = await fetch('/data/pokemon.json')
     let pokemons = await response.json()
+
+    if (userId) {
+        const userPokemonIds = userService.getUserPokemonsIds(userId)
+        pokemons = pokemons.filter((p: Pokemon) => userPokemonIds?.includes(p.id))
+    }
     if (filterBy) {
         const regex = new RegExp(filterBy, 'i')
         pokemons = pokemons.filter((p: Pokemon) => regex.test(p.name.english) || regex.test(p.description))
@@ -17,6 +25,7 @@ async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: numb
     const endIndex = startIndex + rowsPerPage
     const paginatedPokemons = pokemons.slice(startIndex, endIndex)
     const reducedPokemons = convertToBasicPokemons(paginatedPokemons)
+
     return { rows: reducedPokemons, total: pokemons.length }
 }
 
@@ -33,6 +42,15 @@ function convertToBasicPokemons(pokemons: Pokemon[]): BasicPokemon[] {
     })
 }
 
+const tableColumns = [
+    { id: 'image', label: '', minWidth: 35 },
+    { id: 'name', label: 'Pokemon name' },
+    { id: 'id', label: 'ID', minWidth: 35 },
+    { id: 'description', label: 'Description', maxWidth: 545 },
+    { id: 'powerLevel', label: 'Power Level', minWidth: 120 },
+    { id: 'hpLevel', label: 'HP level', minWidth: 120 },
+]
+
 const sortOptions: SortOption[] = [
     { label: 'Name A-Z', sortBy: { name: 1 } },
     { label: 'Name Z-A', sortBy: { name: -1 } },
@@ -44,5 +62,6 @@ const sortOptions: SortOption[] = [
 
 export const pokemonService = {
     fetchPokemons,
-    sortOptions
+    sortOptions,
+    tableColumns
 }

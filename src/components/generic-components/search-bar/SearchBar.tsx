@@ -84,7 +84,6 @@ export const SearchBar = ({ onChange, placeholder = 'Search', isFiltered = false
         onChange(newValue)
     }
 
-    console.log(value)
     return <StyledInputWrapper value={value} isFiltered={isFiltered}>
         <SearchIcon></SearchIcon>
         <input
