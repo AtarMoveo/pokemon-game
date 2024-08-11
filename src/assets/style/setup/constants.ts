@@ -28,7 +28,8 @@ export const colors = {
         200: '#FFE069',
         300: '#FFCB05', // Call to action
         400: '#CCA204',
-        500: '#4C3D01'
+        500: '#4C3D01',
+        green: '#87C877'
     }
 }
 

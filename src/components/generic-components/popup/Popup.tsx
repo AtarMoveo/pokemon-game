@@ -41,6 +41,7 @@ export function Popup({ selectedPokemon, setSelectedPokemon }: PopupProps) {
                             <div><h4>Height</h4><span>{selectedPokemon?.height}</span></div>
                             <div><h4>Weight</h4><span>{selectedPokemon?.weight}</span></div>
                             <div><h4>Type</h4><span>{selectedPokemon?.type.join(', ')}</span></div>
+                            <div><h4>Attack</h4><span>{selectedPokemon?.powerLevel}</span></div>
                             <div><h4>HP</h4><span>{selectedPokemon?.hpLevel}</span></div>
                         </div>
                     </DialogContentText>
