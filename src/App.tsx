@@ -15,7 +15,7 @@ function App() {
     <GlobalStyles />
     <AppHeader/>
     <Routes>
-      <Route path="/allPokemons" element={<AllPokemons />} />
+      <Route path="/" element={<AllPokemons />} />
       <Route path="/myPokemons" element={<MyPokemons />} />
       <Route path="/fight" element={<Fight />} />
     </Routes>

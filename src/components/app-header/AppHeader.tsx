@@ -9,7 +9,7 @@ export function AppHeader() {
             <div className="logo-and-nav-container">
                 <img src="/logo.png" alt="Pokemon-logo" />
                 <nav>
-                    <StyledNavLink to="/allPokemons">
+                    <StyledNavLink to="/">
                         All Pokemons
                     </StyledNavLink>
                     <StyledNavLink to="/myPokemons">

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import GenericTabs from './Tabs'
+import {GenericTabs} from './Tabs'
 import { CardsIcon, ListIcon } from '../../../assets/svg/svg';
 
 //👇 This default export determines where your story goes in the story list
