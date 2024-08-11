@@ -36,7 +36,8 @@ export function Fight() {
         if (isGameOn && !isUserTurn) {
             const timeoutId = setTimeout(() => {
                 if (selectedPokemon!.currHpLevel <= 0) return onUserLose()
-                const attackPower = opponentPokemon!.powerLevel * utilService.getRandomAttackFactor()
+                const typeAdvantageFactor = pokemonService.isTypeAdvantage(opponentPokemon!, selectedPokemon!) ? 1.5 : 1            
+                const attackPower = opponentPokemon!.powerLevel * utilService.getRandomAttackFactor() * typeAdvantageFactor
 
                 setSelectedPokemon((prevPokemon) => {
                     const card = userCardRef.current
@@ -85,7 +86,9 @@ export function Fight() {
 
     function onAttack() {
         setIsFirstAttack(false)
-        const attackPower = selectedPokemon!.powerLevel * utilService.getRandomAttackFactor()
+        const typeAdvantageFactor = pokemonService.isTypeAdvantage(selectedPokemon!, opponentPokemon!) ? 1.5 : 1
+        const attackPower = selectedPokemon!.powerLevel * utilService.getRandomAttackFactor() * typeAdvantageFactor
+        
         setOpponentPokemon((prevPokemon) => {
             const card = opponentCardRef.current
             if (card) {
