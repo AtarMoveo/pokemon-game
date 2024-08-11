@@ -50,22 +50,6 @@ export const StyledPopup = styled(Dialog)`
             svg {
                 padding-block: 1.5rem;
             }
-
-            .pokemon-info {
-                display: flex;
-                justify-content: space-between;
-
-                >*{
-                    display: grid;
-                    gap: 0.5rem;
-                }
-
-                h4 {
-                   color: ${colors.neutrals[400]};
-                   font-size: 0.875rem;
-                   line-height: 1.125rem;
-                }
-            }
         }
     }
 

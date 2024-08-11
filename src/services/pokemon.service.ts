@@ -1,4 +1,4 @@
-import { Pokemon, BasicPokemon, SortBy, SortOption } from "../data/types/pokemon";
+import { Pokemon, BasicPokemon, SortBy, SortOption, SortLabel } from "../data/types/pokemon";
 import { userService } from "./user.service";
 
 async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: number, rowsPerPage: number, userId: string | undefined):
@@ -56,12 +56,12 @@ const tableColumns = [
 ]
 
 const sortOptions: SortOption[] = [
-    { label: 'Name A-Z', sortBy: { name: 1 } },
-    { label: 'Name Z-A', sortBy: { name: -1 } },
-    { label: 'Power (High to low)', sortBy: { power: -1 } },
-    { label: 'Power (Low to high)', sortBy: { power: 1 } },
-    { label: 'HP (High to low)', sortBy: { hp: -1 } },
-    { label: 'HP (Low to high)', sortBy: { hp: 1 } }
+    { label: SortLabel.NameAsc, sortBy: { name: 1 } },
+    { label: SortLabel.NameDesc, sortBy: { name: -1 } },
+    { label: SortLabel.PowerAsc, sortBy: { power: 1 } },
+    { label: SortLabel.PowerDesc, sortBy: { power: -1 } },
+    { label: SortLabel.HPAsc, sortBy: { hp: 1 } },
+    { label: SortLabel.HPDesc, sortBy: { hp: -1 } },
 ]
 
 export const pokemonService = {
