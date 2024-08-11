@@ -58,7 +58,16 @@ export interface SortBy {
     hp?: 1 | -1
 }
 
+export enum SortLabel {
+    NameAsc = 'Name A-Z',
+    NameDesc = 'Name Z-A',
+    PowerAsc = 'Power (Low to high)',
+    PowerDesc = 'Power (High to low)',
+    HPAsc = 'HP (Low to high)',
+    HPDesc = 'HP (High to low)',
+  }
+
 export interface SortOption {
-    label: 'Name A-Z' | 'Name Z-A' | 'Power (High to low)' | 'Power (Low to high)' | 'HP (High to low)' | 'HP (Low to high)'
+    label: SortLabel
     sortBy: SortBy
 }
