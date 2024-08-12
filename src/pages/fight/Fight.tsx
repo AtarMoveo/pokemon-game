@@ -36,16 +36,16 @@ export function Fight() {
         if (isGameOn && !isUserTurn) {
             const timeoutId = setTimeout(() => {
                 if (selectedPokemon!.currHpLevel <= 0) return onUserLose()
-                const typeAdvantageFactor = pokemonService.isTypeAdvantage(opponentPokemon!, selectedPokemon!) ? 1.5 : 1            
+                const typeAdvantageFactor = pokemonService.isTypeAdvantage(opponentPokemon!, selectedPokemon!) ? 1.5 : 1
                 const attackPower = opponentPokemon!.powerLevel * utilService.getRandomAttackFactor() * typeAdvantageFactor
 
+                const card = userCardRef.current
+                if (card) {
+                    card.classList.remove('animate__zoomIn')
+                    triggerAnimation(card, 'animate__flash')
+                }
+
                 setSelectedPokemon((prevPokemon) => {
-                    const card = userCardRef.current
-                    if (card) {
-                        card.classList.remove('animate__flash') // Remove the class to reset animation
-                        void card.offsetWidth // Trigger reflow to restart the animation
-                        card.classList.add('animate__flash')
-                    }
                     const pokemon = prevPokemon as BasicPokemon
                     const updatedHp = pokemon.currHpLevel - attackPower
                     return { ...pokemon, currHpLevel: updatedHp > 0 ? updatedHp : 0 }
@@ -54,7 +54,7 @@ export function Fight() {
             }, 1500)
             return () => clearTimeout(timeoutId)
         }
-    }, [isUserTurn])
+    }, [isUserTurn, isGameOn])
 
     async function loadUserPokemons() {
         try {
@@ -88,14 +88,13 @@ export function Fight() {
         setIsFirstAttack(false)
         const typeAdvantageFactor = pokemonService.isTypeAdvantage(selectedPokemon!, opponentPokemon!) ? 1.5 : 1
         const attackPower = selectedPokemon!.powerLevel * utilService.getRandomAttackFactor() * typeAdvantageFactor
-        
+
+        const card = opponentCardRef.current
+        if (card) {
+            card.classList.remove('animate__zoomIn')
+            triggerAnimation(card, 'animate__flash')
+        }
         setOpponentPokemon((prevPokemon) => {
-            const card = opponentCardRef.current
-            if (card) {
-                card.classList.remove('animate__flash') // Remove the class to reset animation
-                void card.offsetWidth // Trigger reflow to restart the animation
-                card.classList.add('animate__flash')
-            }
             const pokemon = prevPokemon as BasicPokemon
             const updatedHp = pokemon.currHpLevel - attackPower
             return { ...pokemon, currHpLevel: updatedHp > 0 ? updatedHp : 0 }
@@ -109,9 +108,7 @@ export function Fight() {
         if (isCaught) {
             const card = opponentCardRef.current
             if (card) {
-                card.classList.remove('animate__zoomOutLeft'); // Remove the class to reset animation
-                void card.offsetWidth; // Trigger reflow to restart the animation
-                card.classList.add('animate__zoomOutLeft')
+                triggerAnimation(card, 'animate__zoomOutLeft')
             }
             userService.addUserPokemon(userId, opponentPokemon!.id)
             setUserPokemons(prevPokemons => [...prevPokemons, opponentPokemon!])
@@ -124,9 +121,7 @@ export function Fight() {
     function onUserLose() {
         const card = userCardRef.current
         if (card) {
-            card.classList.remove('animate__zoomOutRight') // Remove the class to reset animation
-            void card.offsetWidth // Trigger reflow to restart the animation
-            card.classList.add('animate__zoomOutRight')
+            triggerAnimation(card, 'animate__zoomOutRight')
         }
         userService.removeUserPokemon(userId, selectedPokemon!.id)
         setUserPokemons(prevPokemons => prevPokemons.filter(pokemon => pokemon.id !== selectedPokemon!.id))
@@ -143,21 +138,26 @@ export function Fight() {
         activateAnimations()
     }
 
-    function activateAnimations() {
-        const userCard = userCardRef.current
-        if (userCard) {
-            userCard.classList.remove('animate__zoomOutRight')
-            void userCard.offsetWidth
-            userCard.classList.add('animate__zoomIn')
-        }
-        const opponentCard = opponentCardRef.current
-        if (opponentCard) {
-            opponentCard.classList.remove('animate__zoomOutLeft')
-            void opponentCard.offsetWidth
-            opponentCard.classList.add('animate__zoomIn')
-        }
+    function triggerAnimation(element: HTMLElement, animationClass: string) {
+        element.classList.remove(animationClass); // Remove the animation class to reset it
+        void element.offsetWidth; // Trigger a reflow to restart the animation
+        element.classList.add(animationClass); // Re-add the animation class to start the animation
     }
 
+    function activateAnimations() {
+        const userCard = userCardRef.current
+        const opponentCard = opponentCardRef.current
+
+        if (userCard) {
+            userCard.classList.remove('animate__zoomOutRight', 'animate__flash')
+            triggerAnimation(userCard, 'animate__zoomIn')
+        }
+
+        if (opponentCard) {
+            opponentCard.classList.remove('animate__zoomOutLeft', 'animate__flash')
+            triggerAnimation(opponentCard, 'animate__zoomIn')
+        }
+    }
 
     if (!selectedPokemon || !opponentPokemon) return <div>Loading...</div>
     return <StyledFight>
