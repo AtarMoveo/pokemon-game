@@ -11,6 +11,7 @@ import { BasicPokemon, SortBy } from "../../data/types/pokemon";
 import { CardsIcon, ListIcon } from "../../assets/svg/svg";
 
 import { StyledPage } from "./styles";
+import { CardView } from "../../components/card-view/CardView";
 
 interface PokemonTableProps {
   title: string
@@ -47,24 +48,38 @@ export function PokemonsTable({ title, userId }: PokemonTableProps) {
   function onSearch(searchTerm: string) {
     setFilterBy(searchTerm)
   }
-
+  
   const tabs = [
     {
       label: 'List',
       content: <GenericTable columns={pokemonService.tableColumns} rows={rows} page={page} setPage={setPage}
-        rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} totalRows={totalRows}
-        loading={loading} setSelectedPokemon={setSelectedPokemon}></GenericTable>,
+      rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} totalRows={totalRows}
+      loading={loading} setSelectedPokemon={setSelectedPokemon}>
+      </GenericTable>,
       icon: <ListIcon />
     },
-    { label: 'Cards', content: 'Cards', icon: <CardsIcon />, disabled: true }
+    {
+      label: 'Cards',
+      content: <CardView pokemons={rows} selectedPokemon={selectedPokemon}
+      setSelectedPokemon={setSelectedPokemon} setRowsPerPage={setRowsPerPage}
+      rowsPerPage={rowsPerPage} totalRows={totalRows}>
+      </CardView>,
+      icon: <CardsIcon />
+    }
   ]
-
+  
+    function handleCardClick(tabIdx: number) {
+      const pokemonsPerPage = tabs[tabIdx].label === 'List' ? 10 : 12
+      setRowsPerPage(pokemonsPerPage)
+      setPage(0)
+    }
+  
   return <StyledPage>
     <div className="main-container">
       <h1 className="main-header">{title}</h1>
       <div className="main-content">
         <SearchBar onChange={onSearch} placeholder="Search Pokemon" isFiltered={Boolean(filterBy)}></SearchBar>
-        <GenericTabs tabs={tabs}></GenericTabs>
+        <GenericTabs tabs={tabs} handleTabClick={handleCardClick}></GenericTabs>
         <Sort options={pokemonService.sortOptions} setSortBy={setSortBy}></Sort>
       </div>
       <Popup selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}></Popup>

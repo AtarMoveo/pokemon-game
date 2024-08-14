@@ -1,23 +1,25 @@
 import React, { ReactElement, ReactNode, SyntheticEvent, useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
-import { colors, font, textStyle } from '../../../assets/style/setup/constants';
+import { tabsStyles, tabStyles } from './styles';
 
 interface TabItem {
     label: string
     content: ReactNode
     icon?: ReactNode // Optional icon for each tab
-    disabled?: boolean 
+    disabled?: boolean
 }
 
 interface GenericTabsProps {
     tabs: TabItem[]
+    handleTabClick: (tab: number) => void
 }
 
-export function GenericTabs({ tabs }: GenericTabsProps) {
+export function GenericTabs({ tabs, handleTabClick }: GenericTabsProps) {
     const [value, setValue] = useState(0)
 
     const handleChange = (event: SyntheticEvent, newValue: number) => {
         setValue(newValue)
+        handleTabClick(newValue)
     }
 
     return (
@@ -26,18 +28,7 @@ export function GenericTabs({ tabs }: GenericTabsProps) {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    sx={{
-                        
-                        borderBottom: 0,
-                        '.MuiTabs-flexContainer': {gap: '0.5rem'},
-                        '.MuiTab-root': { minHeight: 'auto' },
-                        '& .MuiTabs-indicator': {
-                            backgroundColor: colors.neutrals.black
-                        },
-                        '.MuiTabs-scroller': {
-                            height: 'fit-content'
-                        }
-                    }}
+                    sx={tabsStyles}
                 >
                     {tabs.map((tab, index) => (
                         <Tab
@@ -47,25 +38,7 @@ export function GenericTabs({ tabs }: GenericTabsProps) {
                             iconPosition="start" // Position the icon before the label
                             disabled={tab.disabled}
                             style={{ minWidth: 'auto', height: '2.375rem', padding: '0.25rem 0.5rem' }}
-                            sx={{
-                                gap: '0.5rem',
-                                fontFamily: font.primary.regular,
-                                ...textStyle.body,
-                                textTransform: 'none',
-                                color: colors.neutrals.black,
-                                '&.Mui-selected': {
-                                    fontFamily: font.primary.bold,
-                                    color: colors.neutrals.black,
-                                },
-                                '&:hover': {
-                                    backgroundColor: colors.primary[50],
-                                },
-                                '&:disabled': {
-                                    svg: {
-                                    color: '#9fa1a2a1'
-                                    }
-                                }
-                            }}
+                            sx={tabStyles}
                         />
                     ))}
                 </Tabs>
