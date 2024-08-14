@@ -1,5 +1,7 @@
 import { Pokemon, BasicPokemon, SortBy, SortOption, SortLabel } from "../data/types/pokemon";
+import { PokemonType, typeAdvantages } from "../data/types/pokemon-types";
 import { userService } from "./user.service";
+import { utilService } from "./util.service";
 
 async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: number, rowsPerPage: number, userId: string | undefined):
     Promise<{ rows: BasicPokemon[], total: number }> {
@@ -37,18 +39,47 @@ function convertToBasicPokemons(pokemons: Pokemon[]): BasicPokemon[] {
             name: pokemon.name.english,
             id: pokemon.id,
             description: pokemon.description,
-            powerLevel: pokemon.base?.Attack,
-            hpLevel: pokemon.base?.HP,
+            powerLevel: pokemon.base?.Attack || 30,
+            hpLevel: pokemon.base?.HP || 30,
+            currHpLevel: pokemon.base?.HP || 30,
             height: pokemon.profile.height,
             weight: pokemon.profile.weight,
-            type: pokemon.type
+            type: pokemon.type,
+            speed: pokemon.base?.Speed || 30
         }
     })
 }
 
+async function fetchMyPokemons(userId: string): Promise<BasicPokemon[]> {
+    const response = await fetch('/data/pokemon.json')
+    let pokemons = await response.json()
+    const userPokemonIds = userService.getUserPokemonsIds(userId)
+    pokemons = pokemons.filter((p: Pokemon) => userPokemonIds?.includes(p.id))
+    const reducedPokemons = convertToBasicPokemons(pokemons)
+    return reducedPokemons
+}
+
+async function fetchRandomPokemon(userId: string): Promise<BasicPokemon[]> {
+    const response = await fetch('/data/pokemon.json')
+    let pokemons = await response.json()
+    const userPokemonIds = userService.getUserPokemonsIds(userId)
+    pokemons = pokemons.filter((p: Pokemon) => !userPokemonIds?.includes(p.id))
+    const randomIdx = utilService.getRandomInt(0, pokemons.length)
+    const reducedPokemons = convertToBasicPokemons([pokemons[randomIdx]])
+    return reducedPokemons
+}
+
+function isTypeAdvantage(pokemon1: BasicPokemon, pokemon2: BasicPokemon): boolean {
+    return pokemon1.type.some(type1 =>
+        pokemon2.type.some(type2 =>
+            typeAdvantages[type1 as PokemonType].includes(type2 as PokemonType)
+        )
+    )
+}
+
 const tableColumns = [
     { id: 'thumbnail', label: '', minWidth: 35 },
-    { id: 'name', label: 'Pokemon name' },
+    { id: 'name', label: 'Pokemon name', minWidth: 150 },
     { id: 'id', label: 'ID', minWidth: 35 },
     { id: 'description', label: 'Description', maxWidth: 545 },
     { id: 'powerLevel', label: 'Power Level', minWidth: 120 },
@@ -66,6 +97,9 @@ const sortOptions: SortOption[] = [
 
 export const pokemonService = {
     fetchPokemons,
+    fetchMyPokemons,
+    fetchRandomPokemon,
+    isTypeAdvantage,
     sortOptions,
-    tableColumns
+    tableColumns,
 }

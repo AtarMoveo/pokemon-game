@@ -34,6 +34,7 @@ interface PokemonBase {
     HP: number
     Attack: number
     Defense: number
+    Speed: number
 }
 
 export interface BasicPokemon {
@@ -44,9 +45,11 @@ export interface BasicPokemon {
     description: string
     powerLevel: number
     hpLevel: number
+    currHpLevel: number
     height: string
     weight: string
     type: string[]
+    speed: number
 }
 
 export interface SortBy {
