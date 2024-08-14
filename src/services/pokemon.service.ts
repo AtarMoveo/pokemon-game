@@ -1,4 +1,5 @@
 import { Pokemon, BasicPokemon, SortBy, SortOption, SortLabel } from "../data/types/pokemon";
+import { PokemonType, typeAdvantages } from "../data/types/pokemon-types";
 import { userService } from "./user.service";
 import { utilService } from "./util.service";
 
@@ -68,6 +69,14 @@ async function fetchRandomPokemon(userId: string): Promise<BasicPokemon[]> {
     return reducedPokemons
 }
 
+function isTypeAdvantage(pokemon1: BasicPokemon, pokemon2: BasicPokemon): boolean {
+    return pokemon1.type.some(type1 =>
+        pokemon2.type.some(type2 =>
+            typeAdvantages[type1 as PokemonType].includes(type2 as PokemonType)
+        )
+    )
+}
+
 const tableColumns = [
     { id: 'thumbnail', label: '', minWidth: 35 },
     { id: 'name', label: 'Pokemon name', minWidth: 150 },
@@ -90,6 +99,7 @@ export const pokemonService = {
     fetchPokemons,
     fetchMyPokemons,
     fetchRandomPokemon,
+    isTypeAdvantage,
     sortOptions,
-    tableColumns
+    tableColumns,
 }
