@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors, font } from "../../../assets/style/setup/constants";
 
-export const StyledInputWrapper = styled.div<{ value: string, isFiltered: boolean }>`
+export const StyledInputWrapper = styled.div<{ value: string, $isFiltered: boolean }>`
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 0.5rem;
@@ -10,7 +10,7 @@ export const StyledInputWrapper = styled.div<{ value: string, isFiltered: boolea
 
     padding: 0.5rem 0.75rem;
     border: 1px solid ${(props) => (props.value ? colors.neutrals[500] : colors.neutrals[200])};
-    border-color: ${(props) => (props.isFiltered ? colors.neutrals[200] : '')};
+    border-color: ${(props) => (props.$isFiltered ? colors.neutrals[200] : '')};
     border-radius: 8px;
 
     &:hover {
