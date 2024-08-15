@@ -47,6 +47,7 @@ export function PokemonsTable({ title, userId }: PokemonTableProps) {
 
   function onSearch(searchTerm: string) {
     setFilterBy(searchTerm)
+    setPage(0)
   }
   
   const tabs = [
