@@ -39,6 +39,16 @@ async function fetchRandomPokemon(userId: number) {   // opponent pokemon
     }
 }
 
+async function fetchUserPokemonsIds(userId: number) {
+    try {
+        const userPokemonsIds = await httpService.get<number[]>(`user-pokemons/${userId}/ids`)
+        return userPokemonsIds
+    } catch (err) {
+        console.error('Error fetching user pokemons ids:', err)
+        throw err
+    }
+}
+
 function isTypeAdvantage(pokemon1: Pokemon, pokemon2: Pokemon): boolean {
     return pokemon1.type.some(type1 =>
         pokemon2.type.some(type2 =>
@@ -69,6 +79,7 @@ export const pokemonService = {
     fetchPokemons,
     fetchMyPokemons,
     fetchRandomPokemon,
+    fetchUserPokemonsIds,
     isTypeAdvantage,
     sortOptions,
     tableColumns,

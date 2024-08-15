@@ -16,10 +16,11 @@ import useDebounce from "../../hooks/useDebounce";
 
 interface PokemonTableProps {
   title: string
+  userPokemonsIds?: number[]
   userId?: number
 }
 
-export function PokemonsTable({ title, userId }: PokemonTableProps) {
+export function PokemonsTable({ title, userPokemonsIds, userId }: PokemonTableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [rows, setRows] = useState<Pokemon[]>([])
@@ -58,7 +59,7 @@ export function PokemonsTable({ title, userId }: PokemonTableProps) {
       label: 'List',
       content: <GenericTable columns={pokemonService.tableColumns} rows={rows} page={page} setPage={setPage}
         rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} totalRows={totalRows}
-        loading={loading} setSelectedPokemon={setSelectedPokemon}>
+        loading={loading} setSelectedPokemon={setSelectedPokemon} userPokemonsIds={userPokemonsIds}>
       </GenericTable>,
       icon: <ListIcon />
     },
@@ -66,7 +67,7 @@ export function PokemonsTable({ title, userId }: PokemonTableProps) {
       label: 'Cards',
       content: <CardView pokemons={rows} selectedPokemon={selectedPokemon}
         setSelectedPokemon={setSelectedPokemon} setRowsPerPage={setRowsPerPage}
-        rowsPerPage={rowsPerPage} totalRows={totalRows}>
+        rowsPerPage={rowsPerPage} totalRows={totalRows} userPokemonsIds={userPokemonsIds}>
       </CardView>,
       icon: <CardsIcon />
     }

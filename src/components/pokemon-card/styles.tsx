@@ -28,6 +28,13 @@ export const StyledPokemonCard = styled.div`
         background-color: ${colors.primary[60]};
         border-radius: 2px;
 
+        .pokeball-img {
+            position: absolute;
+             height: 50px;
+             top: -10px;
+             left: -10px;
+        }
+
         .pokemon-pwr {
             position: absolute;
             right: 5px;
