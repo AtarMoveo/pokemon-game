@@ -1,75 +1,45 @@
-import { Pokemon, BasicPokemon, SortBy, SortOption, SortLabel } from "../data/types/pokemon";
+import { Pokemon, SortBy, SortOption, SortLabel } from "../data/types/pokemon";
 import { PokemonType, typeAdvantages } from "../data/types/pokemon-types";
-import { userService } from "./user.service";
-import { utilService } from "./util.service";
+import { httpService } from "./http.service";
 
-async function fetchPokemons(filterBy: string, sortBy: SortBy | null, page: number, rowsPerPage: number, userId: string | undefined):
-    Promise<{ rows: BasicPokemon[], total: number }> {
-
-    const response = await fetch('/data/pokemon.json')
-    let pokemons = await response.json()
-
-    if (userId) {
-        const userPokemonIds = userService.getUserPokemonsIds(userId)
-        pokemons = pokemons.filter((p: Pokemon) => userPokemonIds?.includes(p.id))
+async function fetchPokemons(filterBy?: string, sortBy?: SortBy | null, page = 0, rowsPerPage = 10, userId?: number) {
+    try {
+        const pokemons = await httpService.get<{ rows: Pokemon[], total: number }>('pokemon', {
+            filterBy,
+            sortBy,
+            page,
+            rowsPerPage,
+            userId
+        });
+        return pokemons
+    } catch (err) {
+        console.error('Error fetching pokemons:', err)
+        throw err
     }
-    if (filterBy) {
-        const regex = new RegExp(filterBy, 'i')
-        pokemons = pokemons.filter((p: Pokemon) => regex.test(p.name.english) || regex.test(p.description))
+}
+
+async function fetchMyPokemons(userId: number) {
+    try {
+        const pokemons = await httpService.get<Pokemon[]>(`user-pokemons/${userId}`)
+        return pokemons
+    } catch (err) {
+        console.error('Error fetching user pokemons:', err)
+        throw err
     }
-    if (sortBy) {
-        if (sortBy.name) pokemons.sort((p1: Pokemon, p2: Pokemon) => (p1.name.english.localeCompare(p2.name.english)) * sortBy.name!)
-        if (sortBy.power) pokemons.sort((p1: Pokemon, p2: Pokemon) => (p1.base?.Attack - p2.base?.Attack) * sortBy.power!)
-        if (sortBy.hp) pokemons.sort((p1: Pokemon, p2: Pokemon) => (p1.base?.HP - p2.base?.HP) * sortBy.hp!)
+}
+
+
+async function fetchRandomPokemon(userId: number) {   // opponent pokemon 
+    try {
+        const pokemon = await httpService.get<Pokemon>(`pokemon/random/${userId}`)
+        return pokemon
+    } catch (err) {
+        console.error('Error fetching random Pokemon:', err);
+        throw new Error('Failed to fetch random Pokemon');
     }
-
-    const startIndex = page * rowsPerPage
-    const endIndex = startIndex + rowsPerPage
-    const paginatedPokemons = pokemons.slice(startIndex, endIndex)
-    const reducedPokemons = convertToBasicPokemons(paginatedPokemons)
-
-    return { rows: reducedPokemons, total: pokemons.length }
 }
 
-function convertToBasicPokemons(pokemons: Pokemon[]): BasicPokemon[] {
-    return pokemons.map((pokemon: Pokemon): BasicPokemon => {
-        return {
-            image: pokemon.image.hires,
-            thumbnail: pokemon.image.thumbnail,
-            name: pokemon.name.english,
-            id: pokemon.id,
-            description: pokemon.description,
-            powerLevel: pokemon.base?.Attack || 30,
-            hpLevel: pokemon.base?.HP || 30,
-            currHpLevel: pokemon.base?.HP || 30,
-            height: pokemon.profile.height,
-            weight: pokemon.profile.weight,
-            type: pokemon.type,
-            speed: pokemon.base?.Speed || 30
-        }
-    })
-}
-
-async function fetchMyPokemons(userId: string): Promise<BasicPokemon[]> {
-    const response = await fetch('/data/pokemon.json')
-    let pokemons = await response.json()
-    const userPokemonIds = userService.getUserPokemonsIds(userId)
-    pokemons = pokemons.filter((p: Pokemon) => userPokemonIds?.includes(p.id))
-    const reducedPokemons = convertToBasicPokemons(pokemons)
-    return reducedPokemons
-}
-
-async function fetchRandomPokemon(userId: string): Promise<BasicPokemon[]> {
-    const response = await fetch('/data/pokemon.json')
-    let pokemons = await response.json()
-    const userPokemonIds = userService.getUserPokemonsIds(userId)
-    pokemons = pokemons.filter((p: Pokemon) => !userPokemonIds?.includes(p.id))
-    const randomIdx = utilService.getRandomInt(0, pokemons.length)
-    const reducedPokemons = convertToBasicPokemons([pokemons[randomIdx]])
-    return reducedPokemons
-}
-
-function isTypeAdvantage(pokemon1: BasicPokemon, pokemon2: BasicPokemon): boolean {
+function isTypeAdvantage(pokemon1: Pokemon, pokemon2: Pokemon): boolean {
     return pokemon1.type.some(type1 =>
         pokemon2.type.some(type2 =>
             typeAdvantages[type1 as PokemonType].includes(type2 as PokemonType)

@@ -7,7 +7,7 @@ import { Sort } from "../../components/generic-components/sort/Sort";
 import { Popup } from "../../components/generic-components/popup/Popup";
 
 import { pokemonService } from "../../services/pokemon.service";
-import { BasicPokemon, SortBy } from "../../data/types/pokemon";
+import { Pokemon, SortBy } from "../../data/types/pokemon";
 import { CardsIcon, ListIcon } from "../../assets/svg/svg";
 
 import { StyledPage } from "./styles";
@@ -15,18 +15,18 @@ import { CardView } from "../../components/card-view/CardView";
 
 interface PokemonTableProps {
   title: string
-  userId?: string
+  userId?: number
 }
 
 export function PokemonsTable({ title, userId }: PokemonTableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [rows, setRows] = useState<BasicPokemon[]>([])
+  const [rows, setRows] = useState<Pokemon[]>([])
   const [totalRows, setTotalRows] = useState(0)
   const [loading, setLoading] = useState(false)
   const [filterBy, setFilterBy] = useState<string>('')
   const [sortBy, setSortBy] = useState<SortBy | null>(null)
-  const [selectedPokemon, setSelectedPokemon] = useState<BasicPokemon | null>(null)
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null)
 
   useEffect(() => {
     loadPokemons()
@@ -35,7 +35,7 @@ export function PokemonsTable({ title, userId }: PokemonTableProps) {
   async function loadPokemons() {
     setLoading(true)
     try {
-      const { rows, total } = await pokemonService.fetchPokemons(filterBy, sortBy, page, rowsPerPage, userId);
+      const { rows, total } = await pokemonService.fetchPokemons(filterBy, sortBy, page, rowsPerPage, userId)
       setRows(rows)
       setTotalRows(total)
     } catch (error) {

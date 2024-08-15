@@ -4,7 +4,7 @@ import {
   TableRow, Paper, TablePagination, CircularProgress
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { BasicPokemon } from '../../../data/types/pokemon';
+import { Pokemon } from '../../../data/types/pokemon';
 import { getColumnPadding, tableStyles } from './styles';
 import { colors, font, textStyle } from '../../../assets/style/setup/constants';
 
@@ -18,14 +18,14 @@ interface Column {
 
 interface GenericTableProps {
   columns: Column[]
-  rows: BasicPokemon[]
+  rows: Pokemon[]
   setPage: Dispatch<SetStateAction<number>>
   setRowsPerPage: Dispatch<SetStateAction<number>>
   loading: boolean
   totalRows: number
   rowsPerPage: number
   page: number
-  setSelectedPokemon: Dispatch<SetStateAction<BasicPokemon | null>>
+  setSelectedPokemon: Dispatch<SetStateAction<Pokemon | null>>
 }
 
 const GenericTable = ({

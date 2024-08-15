@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 import { PowerIcon } from "../../assets/svg/svg";
-import { BasicPokemon } from "../../data/types/pokemon";
+import { Pokemon } from "../../data/types/pokemon";
 import { StyledPokemonCard } from "./styles";
 
 interface PokemonCardProps {
-    pokemon: BasicPokemon
-    setSelectedPokemon: Dispatch<SetStateAction<BasicPokemon | null>>
+    pokemon: Pokemon
+    setSelectedPokemon: Dispatch<SetStateAction<Pokemon | null>>
 }
 
 export function PokemonCard({ pokemon, setSelectedPokemon }: PokemonCardProps) {
