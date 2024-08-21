@@ -1,4 +1,5 @@
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { utilService } from './util.service';
 
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
@@ -8,6 +9,20 @@ const axios = Axios.create({
     baseURL: BASE_URL,
     withCredentials: true
 })
+
+axios.interceptors.request.use(
+    (config) => {
+        const token = utilService.getAccessToken()        
+        
+        if (token) {
+            config.headers.Authorization = token
+        }
+        return config
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
 
 export const httpService = {
     get<T>(endpoint: string, data?: object): Promise<T> {
