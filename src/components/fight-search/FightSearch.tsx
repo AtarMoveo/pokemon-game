@@ -24,7 +24,7 @@ export function FightSearch({ options, selectedPokemon, setSelectedPokemon, isDi
       options={options}
       getOptionLabel={(option) => option.name}
       value={selectedPokemon}
-      onChange={(event, newValue) => handlePokemonSelect(newValue!)}
+      onChange={(_, newValue) => handlePokemonSelect(newValue!)}
       renderOption={(props, option) => (
         <Box component="li" {...props} sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <StyledImg src={option.thumbnail} alt={option.name} />

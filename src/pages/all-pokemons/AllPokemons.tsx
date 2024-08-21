@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import { PokemonsTable } from "../pokemons-table/PokemonsTable";
 import { pokemonService } from "../../services/pokemon.service";
 
-export function AllPokemons() {
+interface AllPokemonsProps {
+    userId: number | undefined
+}
+
+export function AllPokemons({ userId }: AllPokemonsProps) {
     const [userPokemonsIds, setUserPokemonsIds] = useState<number[]>([])
-    const [userId, setUserId] = useState(1)
 
     useEffect(() => {
-        loadUserPokemons()
+        if (userId) loadUserPokemons()
     }, [])
 
     async function loadUserPokemons() {
         try {
-            const pokemonsIds = await pokemonService.fetchUserPokemonsIds(userId)
+            const pokemonsIds = await pokemonService.fetchUserPokemonsIds(userId!)
             setUserPokemonsIds(pokemonsIds)
         } catch (err) {
             console.error('Failed to get user Pokemons ids')

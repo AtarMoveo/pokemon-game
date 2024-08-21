@@ -13,8 +13,11 @@ import { userService } from "../../services/user.service";
 import { StyledFight } from "./styles";
 import { Pokemon } from "../../data/types/pokemon";
 
-export function Fight() {
-    const [userId, setUserId] = useState(1)
+interface FightProps {
+    userId: number | undefined
+}
+
+export function Fight({ userId }: FightProps) {
     const [userPokemons, setUserPokemons] = useState<Pokemon[]>([])
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>()
     const [opponentPokemon, setOpponentPokemon] = useState<Pokemon>()
@@ -27,8 +30,10 @@ export function Fight() {
     const opponentCardRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        loadUserPokemons()
-        loadRandomOpponentPokemon()
+        if (userId) {
+            loadUserPokemons()
+            loadRandomOpponentPokemon()
+        }
     }, [userId])
 
     useEffect(() => {   // handles opponent's turn
@@ -57,7 +62,7 @@ export function Fight() {
 
     async function loadUserPokemons() {
         try {
-            const pokemons = await pokemonService.fetchMyPokemons(userId)
+            const pokemons = await pokemonService.fetchMyPokemons(userId!)
             setUserPokemons(pokemons)
             setSelectedPokemon(pokemons[0])
         } catch (err) {
@@ -67,7 +72,7 @@ export function Fight() {
 
     async function loadRandomOpponentPokemon() {
         try {
-            const pokemon: Pokemon = await pokemonService.fetchRandomPokemon(userId)
+            const pokemon: Pokemon = await pokemonService.fetchRandomPokemon(userId!)
             setOpponentPokemon(pokemon)
         } catch (err) {
             console.error(err)
@@ -109,7 +114,7 @@ export function Fight() {
             if (card) {
                 utilService.triggerAnimation(card, 'animate__zoomOutLeft')
             }
-            onAddPokemonToUser(userId, opponentPokemon!)
+            onAddPokemonToUser(userId!, opponentPokemon!)
         } else {
             setIsUserTurn(false)
         }
@@ -130,7 +135,7 @@ export function Fight() {
         if (card) {
             utilService.triggerAnimation(card, 'animate__zoomOutRight')
         }
-        onRemovePokemonFromUser(userId, selectedPokemon!)
+        onRemovePokemonFromUser(userId!, selectedPokemon!)
     }
 
     async function onRemovePokemonFromUser(userId: number, pokemon: Pokemon) {

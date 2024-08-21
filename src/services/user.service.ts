@@ -1,3 +1,4 @@
+import { AuthUser } from "@aws-amplify/auth";
 import { Pokemon } from "../data/types/pokemon";
 import { httpService } from "./http.service";
 
@@ -10,7 +11,7 @@ async function addPokemonToUser(userId: number, pokemonId: number) {
     }
 }
 
-export async function removePokemonFromUser(userId: number, pokemonId: number) {
+async function removePokemonFromUser(userId: number, pokemonId: number) {
     try {
         const result = await httpService.delete(`user-pokemons/${userId}`, { pokemonId })
         return result
@@ -20,7 +21,17 @@ export async function removePokemonFromUser(userId: number, pokemonId: number) {
     }
 }
 
+async function saveUser(cognitoUser: AuthUser) {
+    try {
+        const user = await httpService.post(`user/login`, { cognitoUser })
+        return user
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export const userService = {
     addPokemonToUser,
-    removePokemonFromUser
+    removePokemonFromUser,
+    saveUser
 }

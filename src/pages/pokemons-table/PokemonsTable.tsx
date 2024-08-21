@@ -17,7 +17,7 @@ import useDebounce from "../../hooks/useDebounce";
 interface PokemonTableProps {
   title: string
   userPokemonsIds?: number[]
-  userId?: number
+  userId?: number | undefined
 }
 
 export function PokemonsTable({ title, userPokemonsIds, userId }: PokemonTableProps) {

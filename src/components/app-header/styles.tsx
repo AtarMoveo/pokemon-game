@@ -10,8 +10,9 @@ export const StyledAppHeader = styled.header`
 
     .header-content {
         grid-column: 2;
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1rem;
         align-items: center;
 
     .logo-and-nav-container {
@@ -44,5 +45,30 @@ export const StyledNavLink = styled(NavLink)`
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.1);
+    }
+`
+
+export const StyledUserMenu = styled.div`
+    position: relative;
+    justify-self: end;
+
+    .user-profile {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+    
+        background-color: ${colors.primary[50]};
+        color: ${colors.primary[300]};
+    
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .sign-out-btn {
+        position: absolute;
+        top: 100%;
+        left: -50%;
+        width: 87px;
     }
 `
