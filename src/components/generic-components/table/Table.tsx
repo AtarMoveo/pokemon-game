@@ -46,14 +46,14 @@ const GenericTable = ({
 
   const renderTableCell = (column: Column, row: Pokemon, value: any) => {
     if (column.id === 'thumbnail') {
-      return (<div style={{ position: 'relative' }}>
+      return (<div style={{position: 'relative', width: '3.375rem', height: '3.375rem'}}>
         <img
           src={value}
           alt={column.label}
           style={tableStyles.imageCell}
         />
         {userPokemonsIds && userPokemonsIds.includes(row.id) &&
-          <img style={{ position: 'absolute', height: 15, bottom: 1, right: 1 }}
+          <img style={{ position: 'absolute', height: 15, bottom: 0, right: 0 }}
             src={pokeBallImg} />}
       </div>
       )
@@ -97,15 +97,18 @@ const GenericTable = ({
               </TableCell></TableRow> : (
                 rows.map((row) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}
-                    onClick={() => setSelectedPokemon(row)} sx={{ cursor: 'pointer' }}>
+                    onClick={() => setSelectedPokemon(row)}
+                    sx={{ ...tableStyles.bodyRow }}>
                     {columns.map((column) => (
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.maxWidth }}
+                        style={{ maxWidth: column.maxWidth, width: column.id === 'thumbnail' ? '80px' : '' }}
                         sx={{
                           ...tableStyles.bodyCell,
                           padding: getColumnPadding(column.id),
+                          ...(column.id === 'name' && tableStyles.nameCell),
+
                         }}
                       >
                         {renderTableCell(column, row, (row as any)[column.id])}

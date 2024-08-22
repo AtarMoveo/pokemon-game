@@ -58,12 +58,12 @@ function isTypeAdvantage(pokemon1: Pokemon, pokemon2: Pokemon): boolean {
 }
 
 const tableColumns = [
-    { id: 'thumbnail', label: '', minWidth: 35 },
-    { id: 'name', label: 'Pokemon name', minWidth: 150 },
-    { id: 'id', label: 'ID', minWidth: 35 },
-    { id: 'description', label: 'Description', maxWidth: 545 },
-    { id: 'powerLevel', label: 'Power Level', minWidth: 120 },
-    { id: 'hpLevel', label: 'HP level', minWidth: 120 },
+    { id: 'thumbnail', label: ''},
+    { id: 'name', label: 'Pokemon name'},
+    { id: 'id', label: 'ID',  },
+    { id: 'description', label: 'Description', maxWidth: 500 },
+    { id: 'powerLevel', label: 'Power Level', minWidth: 100 },
+    { id: 'hpLevel', label: 'HP level', minWidth: 100},
 ]
 
 const sortOptions: SortOption[] = [
