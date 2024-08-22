@@ -3,7 +3,6 @@ import { colors, font, textStyle } from "../../assets/style/setup/constants";
 
 export const StyledPokemonCard = styled.div`
     cursor: pointer;
-    width: 320px;
     padding: 1.5rem;
     display: grid;
     gap: 0.5rem;
