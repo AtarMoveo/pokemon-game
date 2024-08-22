@@ -24,7 +24,7 @@ export function Fight({ userId }: FightProps) {
     const [isGameOn, setIsGameOn] = useState(false)
     const [isFirstAttack, setIsFirstAttack] = useState(true)
     const [isUserTurn, setIsUserTurn] = useState<boolean | null>(null)
-    const [userMsg, setUserMsg] = useState<string | null>(null)
+    const [userMsg, setUserMsg] = useState<React.ReactNode>(null)
 
     const userCardRef = useRef<HTMLDivElement>(null)
     const opponentCardRef = useRef<HTMLDivElement>(null)
@@ -124,7 +124,13 @@ export function Fight({ userId }: FightProps) {
         try {
             await userService.addPokemonToUser(userId, pokemon.id)
             setUserPokemons(prevPokemons => [...prevPokemons, pokemon])
-            setUserMsg(`Congratulations! You caught ${pokemon.name}`)
+            setUserMsg(
+                <>
+                  <p style={{margin: 0}}>Congratulations!</p>
+                  <p style={{marginBlockStart: 0}}>You caught {pokemon.name}.</p>
+                  <img style={{height: 150}} src={pokemon.image} alt={pokemon.name} />
+                </>
+              )
         } catch (err) {
             console.error('Failed to add Pokemon to user')
         }
@@ -142,7 +148,13 @@ export function Fight({ userId }: FightProps) {
         try {
             userService.removePokemonFromUser(userId, pokemon.id)
             setUserPokemons(prevPokemons => prevPokemons.filter(p => p.id !== pokemon.id))
-            setUserMsg(`You lost.\n${pokemon.name} was caught!`)
+            setUserMsg(
+                <>
+                  <p style={{margin: 0}}>You lost.</p>
+                  <p style={{marginBlockStart: 0}}>{pokemon.name} was caught.</p>
+                  <img style={{height: 150}} src={pokemon.image} alt={pokemon.name} />
+                </>
+              )
         } catch (err) {
             console.error('Failed to remove Pokemon from user')
         }
