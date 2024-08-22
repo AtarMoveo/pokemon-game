@@ -29,6 +29,7 @@ export const StyledAppHeader = styled.header`
 `
 
 export const StyledNavLink = styled(NavLink)`
+    position: relative;
     font-family: ${font.secondary.regular};
     ${textStyle.body}
     line-height: 0.875rem;
@@ -63,6 +64,10 @@ export const StyledUserMenu = styled.div`
     
         border-radius: 50%;
         cursor: pointer;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
     }
 
     .sign-out-btn {

@@ -4,6 +4,7 @@ import { StyledAppHeader, StyledNavLink, StyledUserMenu } from "./styles";
 import { User } from "../../data/types/user";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useState } from "react";
+import pokeBallImg from '../../assets/img/pokeball.webp'
 
 interface AppHeaderProps {
     user: User | null
@@ -21,8 +22,10 @@ export function AppHeader({ user }: AppHeaderProps) {
                     <StyledNavLink to="/">
                         All Pokemons
                     </StyledNavLink>
-                    <StyledNavLink to="/myPokemons">
+                    <StyledNavLink to="/myPokemons" style={{paddingInlineEnd: '2.3rem'}}>
                         My Pokemons
+                        <img style={{ position: 'absolute', height: 15, right: 16 }}
+                            src={pokeBallImg} />
                     </StyledNavLink>
                 </nav>
             </div>
