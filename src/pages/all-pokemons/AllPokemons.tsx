@@ -11,7 +11,7 @@ export function AllPokemons({ userId }: AllPokemonsProps) {
 
     useEffect(() => {
         if (userId) loadUserPokemons()
-    }, [])
+    }, [userId])
 
     async function loadUserPokemons() {
         try {
@@ -21,7 +21,7 @@ export function AllPokemons({ userId }: AllPokemonsProps) {
             console.error('Failed to get user Pokemons ids')
         }
     }
-
+    
     return <PokemonsTable
         title='All Pokemons'
         userPokemonsIds={userPokemonsIds}
