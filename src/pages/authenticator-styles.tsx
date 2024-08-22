@@ -45,7 +45,7 @@ export const StyledAuthenticator = styled.main`
                     border-radius: 12px;
 
                     .amplify-tabs__panel {
-                        padding-block-end: 2rem;
+                        padding: 0;
                     }
 
                     .amplify-tabs__list {
@@ -70,8 +70,9 @@ export const StyledAuthenticator = styled.main`
                 }
 
                 [data-amplify-form] {
-                    padding-inline: 1.5rem;
-                    padding-block: 0;
+                    padding: 1.5rem;
+                    max-width: 500px;
+                    border-radius: 12px;
 
                     .amplify-label {
                         font-family: ${font.secondary.regular};
@@ -115,6 +116,15 @@ export const StyledAuthenticator = styled.main`
 
                     [data-amplify-footer]{
                         padding-bottom: 0;
+                    }
+                }
+
+                [data-amplify-authenticator-confirmsignup] {
+                    .amplify-field-group__control:not(.amplify-button--primary) {
+                        &:hover {
+                            background-color: ${colors.primary[60]};
+                            border-color: ${colors.primary[300]};
+                        }
                     }
                 }
             }
