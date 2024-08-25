@@ -26,12 +26,24 @@ async function saveUser(cognitoUser: AuthUser) {
         const user = await httpService.post(`user/login`, { cognitoUser })
         return user
     } catch (error) {
-        console.error(error)
+        console.error('Error saving a user', error)
+        throw new Error('Failed to save user')
+    }
+}
+
+async function handleGameOver(userId: number, gameOver: boolean = false) {    
+    try {
+        const newPokemons = await httpService.post('user/gameOver', { userId, gameOver })
+        return newPokemons
+    } catch (error) {
+        console.error('Error in handling game over', error)
+        throw new Error('Failed to insert new pokemons after game over')
     }
 }
 
 export const userService = {
     addPokemonToUser,
     removePokemonFromUser,
-    saveUser
+    saveUser,
+    handleGameOver
 }

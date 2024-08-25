@@ -2,18 +2,14 @@ import styled from "styled-components";
 import { colors, font } from "../assets/style/setup/constants";
 import LoginImg from '../assets/img/login-bg.png'
 
-export const StyledAuthenticator = styled.main`
-    background-color: ${colors.primary[300]};
-    height: 100vh;
-
+export const StyledAuthenticator = styled.main`    
     main {
         background-color: ${colors.neutrals[100]};
-        height: 100vh;
     }
-
+    
     [data-amplify-authenticator] {
         height: 100vh;
-
+        
         [data-amplify-container] {
             display: grid;
             grid-template-columns: minmax(200px, 1fr) 2fr;
@@ -21,6 +17,7 @@ export const StyledAuthenticator = styled.main`
             align-items: center;
             width: 100%;
             height: 100vh;
+            background-color: ${colors.primary[300]};
 
             .pokemon-logo {
                 display: grid;
