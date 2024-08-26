@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { Location, useLocation } from "react-router";
 import { PokemonsTable } from "../pokemons-table/PokemonsTable";
 
-export function MyPokemons() {
-    const [userId, setUserId] = useState('123')
+import '@aws-amplify/ui-react/styles.css';
 
-    return <PokemonsTable
-        title='My Pokemons'
-        userId={userId}>
-    </PokemonsTable>
+interface MyPokemonsProps {
+    userId: number | undefined
+}
+
+export function MyPokemons({userId}: MyPokemonsProps) {
+    const location: Location = useLocation()
+
+  
+    return (
+        <PokemonsTable
+            title='My Pokemons'
+            userId={userId}
+            refresh={location}
+        >
+        </PokemonsTable>
+    )
 }

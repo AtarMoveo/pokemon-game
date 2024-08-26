@@ -1,19 +1,19 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Autocomplete, Box, TextField } from '@mui/material';
 
-import { BasicPokemon } from '../../data/types/pokemon';
+import { Pokemon } from '../../data/types/pokemon';
 import { font } from '../../assets/style/setup/constants';
 import { StyledImg, textFieldStyles, listboxStyles } from './styles';
 
 interface FightSearchProps {
-  options: BasicPokemon[]
-  selectedPokemon: BasicPokemon
-  setSelectedPokemon: Dispatch<SetStateAction<BasicPokemon>>
+  options: Pokemon[]
+  selectedPokemon: Pokemon
+  setSelectedPokemon: Dispatch<SetStateAction<Pokemon>>
   isDisabled?: boolean
 }
 
 export function FightSearch({ options, selectedPokemon, setSelectedPokemon, isDisabled }: FightSearchProps) {
-  function handlePokemonSelect(pokemon: BasicPokemon) {
+  function handlePokemonSelect(pokemon: Pokemon) {
     setSelectedPokemon(pokemon)
   }
 
@@ -24,7 +24,7 @@ export function FightSearch({ options, selectedPokemon, setSelectedPokemon, isDi
       options={options}
       getOptionLabel={(option) => option.name}
       value={selectedPokemon}
-      onChange={(event, newValue) => handlePokemonSelect(newValue!)}
+      onChange={(_, newValue) => handlePokemonSelect(newValue!)}
       renderOption={(props, option) => (
         <Box component="li" {...props} sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <StyledImg src={option.thumbnail} alt={option.name} />

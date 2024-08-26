@@ -11,6 +11,7 @@ export const StyledImg = styled.img`
 `
 
 export const textFieldStyles: SxProps = {
+    zIndex: 1,
     '& .MuiOutlinedInput-root': {
         height: '2.375rem',
         maxWidth: '250px',

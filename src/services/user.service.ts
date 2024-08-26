@@ -1,49 +1,49 @@
-import { UserPokemons } from "../data/types/user";
-import { utilService } from "./util.service";
+import { AuthUser } from "@aws-amplify/auth";
+import { Pokemon } from "../data/types/pokemon";
+import { httpService } from "./http.service";
 
-// const users: User[] = [
-//     { id: '123', name: 'atar', password: 'atar', email: 'atarmor92@gmail.com' }
-// ]
-
-const USER_POKEMONS_DB = 'userPokemonsDb'
-
-let usersPokemons: UserPokemons[] = []
-createUserPokemons()
-
-function createUserPokemons() {
-    const pokemons = utilService.loadFromStorage(USER_POKEMONS_DB)
-    if (pokemons) return usersPokemons = pokemons
-    usersPokemons = [
-        { userId: '123', pokemonIds: [1, 7, 20, 43, 50, 56, 25] }
-    ]
-    utilService.saveToStorage(USER_POKEMONS_DB, usersPokemons)
-}
-
-function getUserPokemonsIds(userId: string) {
-    const userPokemons = usersPokemons.find(user => userId === user.userId)
-    if (userPokemons) {
-        return userPokemons.pokemonIds
+async function addPokemonToUser(userId: number, pokemonId: number) {
+    try {
+        await httpService.post<Pokemon>(`user-pokemons/${userId}`, { pokemonId })
+    } catch (error) {
+        console.error('Error adding Pokemon to user:', error)
+        throw new Error('Failed to add Pokemon to user')
     }
 }
 
-function addUserPokemon(userId: string, pokemonId: number) {
-    const userPokemonsIdx = usersPokemons.findIndex(user => userId === user.userId)
-    if (userPokemonsIdx <= -1) return
-
-    usersPokemons[userPokemonsIdx].pokemonIds.unshift(pokemonId)
-    utilService.saveToStorage(USER_POKEMONS_DB, usersPokemons)
+async function removePokemonFromUser(userId: number, pokemonId: number) {
+    try {
+        const result = await httpService.delete(`user-pokemons/${userId}`, { pokemonId })
+        return result
+    } catch (error) {
+        console.error('Error removing Pokemon from user:', error)
+        throw new Error('Failed to remove Pokemon from user')
+    }
 }
 
-function removeUserPokemon(userId: string, pokemonId: number) {
-    const userPokemonsIdx = usersPokemons.findIndex(user => userId === user.userId)
-    if (userPokemonsIdx <= -1) return
+async function saveUser(cognitoUser: AuthUser) {
+    try {
+        const user = await httpService.post(`user/login`, { cognitoUser })
+        return user
+    } catch (error) {
+        console.error('Error saving a user', error)
+        throw new Error('Failed to save user')
+    }
+}
 
-    usersPokemons[userPokemonsIdx].pokemonIds = usersPokemons[userPokemonsIdx].pokemonIds.filter(id => id !== pokemonId)
-    utilService.saveToStorage(USER_POKEMONS_DB, usersPokemons)
+async function handleGameOver(userId: number, gameOver: boolean = false) {    
+    try {
+        const newPokemons = await httpService.post('user/gameOver', { userId, gameOver })
+        return newPokemons
+    } catch (error) {
+        console.error('Error in handling game over', error)
+        throw new Error('Failed to insert new pokemons after game over')
+    }
 }
 
 export const userService = {
-    getUserPokemonsIds,
-    addUserPokemon,
-    removeUserPokemon
+    addPokemonToUser,
+    removePokemonFromUser,
+    saveUser,
+    handleGameOver
 }

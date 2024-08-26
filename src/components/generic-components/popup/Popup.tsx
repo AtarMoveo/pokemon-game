@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { BasicPokemon } from '../../../data/types/pokemon';
+import { Pokemon } from '../../../data/types/pokemon';
 import { StyledPopup } from './styles';
 import { CloseModalX, SeparatingLine } from '../../../assets/svg/svg';
 import { PokemonInfo } from '../../pokemon-info/PokemonInfo';
 
 interface PopupProps {
-    selectedPokemon: BasicPokemon | null
-    setSelectedPokemon: Dispatch<SetStateAction<BasicPokemon | null>>
+    selectedPokemon: Pokemon | null
+    setSelectedPokemon: Dispatch<SetStateAction<Pokemon | null>>
 }
 export function Popup({ selectedPokemon, setSelectedPokemon }: PopupProps) {
     const [isOpen, setIsOpen] = useState(false)

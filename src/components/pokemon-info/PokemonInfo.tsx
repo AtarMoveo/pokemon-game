@@ -1,8 +1,8 @@
-import { BasicPokemon } from "../../data/types/pokemon"
+import { Pokemon } from "../../data/types/pokemon"
 import { StyledPokemonInfo } from "./styles"
 
 interface PokemonInfoProps {
-    pokemon: BasicPokemon
+    pokemon: Pokemon
 }
 
 export function PokemonInfo({ pokemon }: PokemonInfoProps) {
