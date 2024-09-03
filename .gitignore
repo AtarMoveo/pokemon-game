@@ -49,3 +49,4 @@ amplifytools.xcconfig
 
 
 amplify/team-provider-info.json
+.env

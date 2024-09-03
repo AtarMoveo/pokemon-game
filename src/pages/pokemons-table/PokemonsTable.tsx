@@ -83,7 +83,7 @@ export function PokemonsTable({ title, userPokemonsIds, userId, refresh }: Pokem
   }
 
   return <StyledPage>
-    <div className="main-container">
+    <div className="main-container" data-cy="all-pokemons-container">
       <h1 className="main-header">{title}</h1>
       <div className="main-content">
         <SearchBar onChange={onSearch} placeholder="Search Pokemon" isFiltered={Boolean(filterBy)}></SearchBar>

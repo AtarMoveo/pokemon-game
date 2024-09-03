@@ -12,9 +12,9 @@ export const StyledImg = styled.img`
 
 export const textFieldStyles: SxProps = {
     zIndex: 1,
+    maxWidth: '250px',
     '& .MuiOutlinedInput-root': {
         height: '2.375rem',
-        maxWidth: '250px',
         borderRadius: '8px',
         '& fieldset': {
             borderColor: colors.neutrals[200],

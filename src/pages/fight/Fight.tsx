@@ -211,7 +211,7 @@ export function Fight({ userId }: FightProps) {
     }
 
     if (!selectedPokemon || !opponentPokemon) return <div>Loading...</div>
-    return <StyledFight>
+    return <StyledFight data-cy="fight-page">
         <div className="fight-main-container">
             <h1 className="fight-title">Fighting arena</h1>
             <h2 className="fight-subtitle">Press fight button until your or your enemy power ends</h2>

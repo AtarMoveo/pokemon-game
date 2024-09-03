@@ -31,9 +31,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <StyledAuthenticator>
       <Authenticator components={components}>
         {({ user }) => (
-            <main>
-              <App cognitoUser={user} />
-            </main>
+          <main>
+            <App cognitoUser={user} />
+          </main>
         )}
       </Authenticator>
     </StyledAuthenticator>

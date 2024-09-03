@@ -16,14 +16,15 @@ export function GamingCard({ pokemon, isUser, cardRef }: GamingCardProps) {
     ${colors.secondary.green} ${pokemon.currHpLevel / pokemon.hpLevel * 100}%, 
     ${colors.neutrals[150]} ${1 - pokemon.currHpLevel / pokemon.hpLevel * 100}%)`
 
-    return <StyledGamingCard ref={cardRef} className="animate__animated">
+    return <StyledGamingCard data-cy={isUser ? "user-pokemon-card" : "opponent-pokemon-card"}
+        ref={cardRef} className="animate__animated">
         <h3 className="card-title">{isUser ? 'You' : 'Opponent'}</h3>
         <div className="img-container">
-            <img src={pokemon.image} alt={`${pokemon.name}-image`} />
-            <div className="pokemon-pwr">{pokemon.powerLevel}<span>pwr</span></div>
+            <img data-cy="pokemon-picture" src={pokemon.image} alt={`${pokemon.name}-image`} />
+            <div data-cy="pokemon-power-level" className="pokemon-pwr">{pokemon.powerLevel}<span>pwr</span></div>
         </div>
-        <h5 className="pokemon-id">#{pokemon.id}</h5>
-        <h3 className="pokemon-name">{pokemon.name}</h3>
+        <h5 data-cy="pokemon-id" className="pokemon-id">#{pokemon.id}</h5>
+        <h3 data-cy="pokemon-name" className="pokemon-name">{pokemon.name}</h3>
         <div className="progress-bar" style={{ background: hpProgressBar, transition: '1s' }}></div>
     </StyledGamingCard>
 }

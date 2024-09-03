@@ -21,7 +21,7 @@ export function CardView({ pokemons, selectedPokemon, setSelectedPokemon, setRow
         setRowsPerPage(prevRows => prevRows + 12)
       }
 
-    return <StyledCardView>
+    return <StyledCardView data-cy="cards-view-cmp">
         {pokemons.map((pokemon) => {
             return <PokemonCard pokemon={pokemon} setSelectedPokemon={setSelectedPokemon} userPokemonsIds={userPokemonsIds}></PokemonCard>
         })}

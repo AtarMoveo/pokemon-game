@@ -10,7 +10,7 @@ async function fetchPokemons(filterBy?: string, sortBy?: SortBy | null, page = 0
             page,
             rowsPerPage,
             userId
-        });
+        })
         return pokemons
     } catch (err) {
         console.error('Error fetching pokemons:', err)
@@ -34,8 +34,8 @@ async function fetchRandomPokemon(userId: number) {   // opponent pokemon
         const pokemon = await httpService.get<Pokemon>(`pokemon/random/${userId}`)
         return pokemon
     } catch (err) {
-        console.error('Error fetching random Pokemon:', err);
-        throw new Error('Failed to fetch random Pokemon');
+        console.error('Error fetching random Pokemon:', err)
+        throw new Error('Failed to fetch random Pokemon')
     }
 }
 
@@ -62,7 +62,7 @@ const tableColumns = [
     { id: 'name', label: 'Pokemon name'},
     { id: 'id', label: 'ID',  },
     { id: 'description', label: 'Description', maxWidth: 500 },
-    { id: 'powerLevel', label: 'Power Level', minWidth: 100 },
+    { id: 'powerLevel', label: 'Power level', minWidth: 100 },
     { id: 'hpLevel', label: 'HP level', minWidth: 100},
 ]
 
