@@ -26,13 +26,14 @@ export function Popup({ selectedPokemon, setSelectedPokemon }: PopupProps) {
     if (!selectedPokemon) return
     return (
         <StyledPopup
+            data-cy="pokemon-popup"
             open={isOpen}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
             <div className='pokemon-id'>{selectedPokemon.id}</div>
-            <DialogTitle id="alert-dialog-title">{selectedPokemon.name}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" data-cy="pokemon-popup-title">{selectedPokemon.name}</DialogTitle>
             <DialogContent>
                 <img src={selectedPokemon.image} alt={`${selectedPokemon.name} image`} />
                 <DialogContentText id="alert-dialog-description">
@@ -42,7 +43,7 @@ export function Popup({ selectedPokemon, setSelectedPokemon }: PopupProps) {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button data-cy="pokemon-popup-close" onClick={handleClose} color="primary">
                     <CloseModalX></CloseModalX>
                 </Button>
             </DialogActions>

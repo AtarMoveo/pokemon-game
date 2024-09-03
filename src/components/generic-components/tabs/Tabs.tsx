@@ -32,6 +32,7 @@ export function GenericTabs({ tabs, handleTabClick }: GenericTabsProps) {
                 >
                     {tabs.map((tab, index) => (
                         <Tab
+                            data-cy={`${tab.label}-tab`}
                             key={index}
                             label={tab.label}
                             icon={tab.icon as ReactElement} // Render the SVG icon

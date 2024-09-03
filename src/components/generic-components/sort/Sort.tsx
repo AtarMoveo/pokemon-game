@@ -21,13 +21,19 @@ export function Sort({ options, setSortBy }: SortProps) {
 
   return (
     <Autocomplete
+      data-cy="sort-by-dropdown"
       disablePortal
       options={options}
       getOptionLabel={(option) => option.label}
       isOptionEqualToValue={(option, value) => option.sortBy === value.sortBy}
       value={value}
-      onChange={(event, newValue) => handleSortBy(newValue!)}
+      onChange={(_, newValue) => handleSortBy(newValue!)}
       renderInput={(params) => <TextField {...params} placeholder="Sort by" size="small" />}
+      renderOption={(props, option) => (
+        <li {...props} data-cy={`sort-by-option-${option.label}`}>
+          {option.label}
+        </li>
+      )}
       popupIcon={<ArrowDown />}
       sx={autocompleteStyles(value)}
       ListboxProps={{

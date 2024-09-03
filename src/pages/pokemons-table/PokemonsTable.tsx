@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { Location } from "react-router";
+import useDebounce from "../../hooks/useDebounce";
 
 import GenericTable from "../../components/generic-components/table/Table";
 import { GenericTabs } from "../../components/generic-components/tabs/Tabs";
+import { CardView } from "../../components/card-view/CardView";
 import { SearchBar } from "../../components/generic-components/search-bar/SearchBar";
 import { Sort } from "../../components/generic-components/sort/Sort";
 import { Popup } from "../../components/generic-components/popup/Popup";
@@ -11,16 +14,15 @@ import { Pokemon, SortBy } from "../../data/types/pokemon";
 import { CardsIcon, ListIcon } from "../../assets/svg/svg";
 
 import { StyledPage } from "./styles";
-import { CardView } from "../../components/card-view/CardView";
-import useDebounce from "../../hooks/useDebounce";
 
 interface PokemonTableProps {
   title: string
   userPokemonsIds?: number[]
   userId?: number | undefined
+  refresh?: Location
 }
 
-export function PokemonsTable({ title, userPokemonsIds, userId }: PokemonTableProps) {
+export function PokemonsTable({ title, userPokemonsIds, userId, refresh }: PokemonTableProps) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [rows, setRows] = useState<Pokemon[]>([])
@@ -30,11 +32,12 @@ export function PokemonsTable({ title, userPokemonsIds, userId }: PokemonTablePr
   const [sortBy, setSortBy] = useState<SortBy | null>(null)
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null)
 
+
   const debouncedFilterBy = useDebounce(filterBy, 500)
 
-  useEffect(() => {
+  useEffect(() => {    
     loadPokemons()
-  }, [page, rowsPerPage, debouncedFilterBy, sortBy, userId])
+  }, [page, rowsPerPage, debouncedFilterBy, sortBy, userId, refresh])
 
   async function loadPokemons() {
     setLoading(true)
@@ -80,7 +83,7 @@ export function PokemonsTable({ title, userPokemonsIds, userId }: PokemonTablePr
   }
 
   return <StyledPage>
-    <div className="main-container">
+    <div className="main-container" data-cy="all-pokemons-container">
       <h1 className="main-header">{title}</h1>
       <div className="main-content">
         <SearchBar onChange={onSearch} placeholder="Search Pokemon" isFiltered={Boolean(filterBy)}></SearchBar>

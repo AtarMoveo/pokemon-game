@@ -22,7 +22,7 @@ export function AppHeader({ user }: AppHeaderProps) {
                     <StyledNavLink to="/">
                         All Pokemons
                     </StyledNavLink>
-                    <StyledNavLink to="/myPokemons" style={{paddingInlineEnd: '2.3rem'}}>
+                    <StyledNavLink to="/myPokemons" style={{ paddingInlineEnd: '2.3rem' }}>
                         My Pokemons
                         <img style={{ position: 'absolute', height: 15, right: 16 }}
                             src={pokeBallImg} />
@@ -30,12 +30,12 @@ export function AppHeader({ user }: AppHeaderProps) {
                 </nav>
             </div>
             {user && <StyledUserMenu>
-                <div className="user-profile" onClick={() => setIsMenuOpen((prev) => !prev)}>
+                <div className="user-profile" data-cy="user-profile" onClick={() => setIsMenuOpen((prev) => !prev)}>
                     {user.email.substring(0, 1).toUpperCase()}
                 </div>
                 {isMenuOpen && <Button className="sign-out-btn" type="secondary" size="sm" onClick={signOut}>Sign out</Button>}
             </StyledUserMenu>}
-            <NavLink to="/fight"> <Button type="primary" size="md">Start a Fight</Button></NavLink>
+            <NavLink to="/fight" data-cy="start-fight-button"> <Button type="primary" size="md">Start a Fight</Button></NavLink>
         </section>
     </StyledAppHeader>
 }

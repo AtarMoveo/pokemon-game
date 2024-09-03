@@ -19,6 +19,7 @@ export function FightSearch({ options, selectedPokemon, setSelectedPokemon, isDi
 
   return (
     <Autocomplete
+      data-cy="pokemon-dropdown"
       disableClearable
       disabled={isDisabled}
       options={options}
@@ -26,7 +27,9 @@ export function FightSearch({ options, selectedPokemon, setSelectedPokemon, isDi
       value={selectedPokemon}
       onChange={(_, newValue) => handlePokemonSelect(newValue!)}
       renderOption={(props, option) => (
-        <Box component="li" {...props} sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <Box component="li" {...props}
+          data-cy="pokemon-option"
+          sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <StyledImg src={option.thumbnail} alt={option.name} />
           <span style={{ flexGrow: 1 }}>{option.name}</span>
           <div>

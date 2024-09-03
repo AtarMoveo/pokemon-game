@@ -46,7 +46,7 @@ const GenericTable = ({
 
   const renderTableCell = (column: Column, row: Pokemon, value: any) => {
     if (column.id === 'thumbnail') {
-      return (<div style={{position: 'relative', width: '3.375rem', height: '3.375rem'}}>
+      return (<div style={{ position: 'relative', width: '3.375rem', height: '3.375rem' }}>
         <img
           src={value}
           alt={column.label}
@@ -62,9 +62,9 @@ const GenericTable = ({
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={0}>
-      <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
+    <Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={0} >
+      <TableContainer >
+        <Table stickyHeader aria-label="sticky table" data-cy="pokemon-table">
           <TableHead>
             <TableRow sx={tableStyles.headRow}>
               {columns.map((column) => (
@@ -98,7 +98,8 @@ const GenericTable = ({
                 rows.map((row) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.id}
                     onClick={() => setSelectedPokemon(row)}
-                    sx={{ ...tableStyles.bodyRow }}>
+                    sx={{ ...tableStyles.bodyRow }}
+                    data-cy={`pokemon-row-${row.name}`}>
                     {columns.map((column) => (
                       <TableCell
                         key={column.id}
@@ -110,6 +111,7 @@ const GenericTable = ({
                           ...(column.id === 'name' && tableStyles.nameCell),
 
                         }}
+                        data-cy={`pokemon-cell-${column.id}-${row.id}`}
                       >
                         {renderTableCell(column, row, (row as any)[column.id])}
                       </TableCell>

@@ -25,6 +25,7 @@ export function Fight({ userId }: FightProps) {
     const [isFirstAttack, setIsFirstAttack] = useState(true)
     const [isUserTurn, setIsUserTurn] = useState<boolean | null>(null)
     const [userMsg, setUserMsg] = useState<React.ReactNode>(null)
+    const [isGameOver, setIsGameOver] = useState(false)
 
     const userCardRef = useRef<HTMLDivElement>(null)
     const opponentCardRef = useRef<HTMLDivElement>(null)
@@ -126,11 +127,11 @@ export function Fight({ userId }: FightProps) {
             setUserPokemons(prevPokemons => [...prevPokemons, pokemon])
             setUserMsg(
                 <>
-                  <p style={{margin: 0}}>Congratulations!</p>
-                  <p style={{marginBlockStart: 0}}>You caught {pokemon.name}.</p>
-                  <img style={{height: 150}} src={pokemon.image} alt={pokemon.name} />
+                    <p style={{ margin: 0 }}>Congratulations!</p>
+                    <p style={{ marginBlockStart: 0 }}>You caught {pokemon.name}.</p>
+                    <img style={{ height: 150 }} src={pokemon.image} alt={pokemon.name} />
                 </>
-              )
+            )
         } catch (err) {
             console.error('Failed to add Pokemon to user')
         }
@@ -148,15 +149,39 @@ export function Fight({ userId }: FightProps) {
         try {
             userService.removePokemonFromUser(userId, pokemon.id)
             setUserPokemons(prevPokemons => prevPokemons.filter(p => p.id !== pokemon.id))
-            setUserMsg(
-                <>
-                  <p style={{margin: 0}}>You lost.</p>
-                  <p style={{marginBlockStart: 0}}>{pokemon.name} was caught.</p>
-                  <img style={{height: 150}} src={pokemon.image} alt={pokemon.name} />
-                </>
-              )
+            if (userPokemons.length <= 1) {
+                await onGameOver(userId)
+            } else {
+                handlePokemonCatch(pokemon)
+            }
         } catch (err) {
             console.error('Failed to remove Pokemon from user')
+        }
+    }
+
+    function handlePokemonCatch(pokemon: Pokemon) {
+        setUserMsg(
+            <>
+                <p style={{ margin: 0 }}>You lost.</p>
+                <p style={{ marginBlockStart: 0 }}>{pokemon.name} was caught.</p>
+                <img style={{ height: 150 }} src={pokemon.image} alt={pokemon.name} />
+            </>
+        )
+    }
+
+    async function onGameOver(userId: number) {
+        try {
+            await userService.handleGameOver(userId, true)
+            await loadUserPokemons()
+            setIsGameOver(true)
+            setUserMsg(
+                <>
+                    <p style={{ margin: 0 }}>Game Over!</p>
+                    <p> You lost all Pokemons. </p>
+                </>
+            )
+        } catch (err) {
+            console.error(err)
         }
     }
 
@@ -165,7 +190,7 @@ export function Fight({ userId }: FightProps) {
         setIsFirstAttack(true)
         setUserMsg(null)
         setIsUserTurn(null)
-        setSelectedPokemon(userPokemons[1])
+        setSelectedPokemon(userPokemons[0])
         loadRandomOpponentPokemon()
         activateAnimations()
     }
@@ -186,7 +211,7 @@ export function Fight({ userId }: FightProps) {
     }
 
     if (!selectedPokemon || !opponentPokemon) return <div>Loading...</div>
-    return <StyledFight>
+    return <StyledFight data-cy="fight-page">
         <div className="fight-main-container">
             <h1 className="fight-title">Fighting arena</h1>
             <h2 className="fight-subtitle">Press fight button until your or your enemy power ends</h2>
@@ -203,7 +228,7 @@ export function Fight({ userId }: FightProps) {
                     {isGameOn && <FightBtn type={ButtonType.Action} isDisabled={isFirstAttack} onClick={onCatch}>Catch</FightBtn>}
                 </div>
                 {opponentPokemon && <GamingCard cardRef={opponentCardRef} pokemon={opponentPokemon} isUser={false}></GamingCard>}
-                {userMsg && <UserMsg msg={userMsg} onRestart={onRestart}></UserMsg>}
+                {userMsg && <UserMsg msg={userMsg} onRestart={onRestart} isGameOver={isGameOver}></UserMsg>}
             </div>
         </div>
     </StyledFight>

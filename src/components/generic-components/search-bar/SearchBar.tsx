@@ -25,6 +25,7 @@ export const SearchBar = ({ onChange, placeholder = 'Search', isFiltered = false
             value={value}
             onChange={handleChange}
             placeholder={placeholder}
+            data-cy="search-pokemon-input"
         />
         {isFiltered && <button className="clean-btn" onClick={() => {
             (setValue('')); onChange('')
