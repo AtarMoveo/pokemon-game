@@ -3,6 +3,7 @@ import { colors, font, textStyle } from '../../../assets/style/setup/constants';
 import { SortOption } from '../../../data/types/pokemon';
 
 export const autocompleteStyles = (value: SortOption | null): SxProps => ({
+    zIndex: 1,
     '& .MuiOutlinedInput-root': {
         height: '2.375rem',
         minWidth: '13.5rem',

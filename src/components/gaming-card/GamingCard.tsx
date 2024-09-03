@@ -1,12 +1,12 @@
 import 'animate.css'
 
 import { colors } from "../../assets/style/setup/constants"
-import { BasicPokemon } from "../../data/types/pokemon"
+import { Pokemon } from "../../data/types/pokemon"
 import { StyledGamingCard } from "./styles"
 
 
 interface GamingCardProps {
-    pokemon: BasicPokemon
+    pokemon: Pokemon
     isUser: boolean
     cardRef: React.Ref<HTMLDivElement>
 }

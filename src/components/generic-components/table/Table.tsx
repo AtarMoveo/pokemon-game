@@ -4,9 +4,10 @@ import {
   TableRow, Paper, TablePagination, CircularProgress
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import { BasicPokemon } from '../../../data/types/pokemon';
+import { Pokemon } from '../../../data/types/pokemon';
 import { getColumnPadding, tableStyles } from './styles';
 import { colors, font, textStyle } from '../../../assets/style/setup/constants';
+import pokeBallImg from '../../../assets/img/pokeball.webp'
 
 interface Column {
   id: string
@@ -18,21 +19,23 @@ interface Column {
 
 interface GenericTableProps {
   columns: Column[]
-  rows: BasicPokemon[]
+  rows: Pokemon[]
   setPage: Dispatch<SetStateAction<number>>
   setRowsPerPage: Dispatch<SetStateAction<number>>
   loading: boolean
   totalRows: number
   rowsPerPage: number
   page: number
-  setSelectedPokemon: Dispatch<SetStateAction<BasicPokemon | null>>
+  setSelectedPokemon: Dispatch<SetStateAction<Pokemon | null>>
+  userPokemonsIds?: number[]
 }
 
 const GenericTable = ({
-  columns, rows, setPage, setRowsPerPage, loading, totalRows, rowsPerPage, page, setSelectedPokemon
+  columns, rows, setPage, setRowsPerPage, loading, totalRows, rowsPerPage,
+  page, setSelectedPokemon, userPokemonsIds
 }: GenericTableProps) => {
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage)
   }
 
@@ -41,21 +44,25 @@ const GenericTable = ({
     setPage(0)
   }
 
-  const renderTableCell = (column: Column, value: any) => {
+  const renderTableCell = (column: Column, row: Pokemon, value: any) => {
     if (column.id === 'thumbnail') {
-      return (
+      return (<div style={{position: 'relative', width: '3.375rem', height: '3.375rem'}}>
         <img
           src={value}
           alt={column.label}
           style={tableStyles.imageCell}
         />
+        {userPokemonsIds && userPokemonsIds.includes(row.id) &&
+          <img style={{ position: 'absolute', height: 15, bottom: 0, right: 0 }}
+            src={pokeBallImg} />}
+      </div>
       )
     }
     return typeof value === 'object' ? JSON.stringify(value) : value
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={0}>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -79,27 +86,32 @@ const GenericTable = ({
               </TableCell>
             </TableRow>}
             {!loading && rows.length === 0 ?
-              <TableRow><TableCell colSpan={columns.length} align="center" height="260px" 
-              sx={{ fontFamily: font.primary.regular,
-                ...textStyle.mediumHeading,
-                color: colors.neutrals[350]}}
+              <TableRow><TableCell colSpan={columns.length} align="center" height="260px"
+                sx={{
+                  fontFamily: font.primary.regular,
+                  ...textStyle.mediumHeading,
+                  color: colors.neutrals[350]
+                }}
               >
                 No Pokemons exist
               </TableCell></TableRow> : (
                 rows.map((row) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id} 
-                  onClick={()=>setSelectedPokemon(row)} sx={{cursor: 'pointer'}}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}
+                    onClick={() => setSelectedPokemon(row)}
+                    sx={{ ...tableStyles.bodyRow }}>
                     {columns.map((column) => (
                       <TableCell
                         key={column.id}
                         align={column.align}
-                        style={{ maxWidth: column.maxWidth }}
+                        style={{ maxWidth: column.maxWidth, width: column.id === 'thumbnail' ? '80px' : '' }}
                         sx={{
                           ...tableStyles.bodyCell,
                           padding: getColumnPadding(column.id),
+                          ...(column.id === 'name' && tableStyles.nameCell),
+
                         }}
                       >
-                        {renderTableCell(column, (row as any)[column.id])}
+                        {renderTableCell(column, row, (row as any)[column.id])}
                       </TableCell>
                     ))}
                   </TableRow>

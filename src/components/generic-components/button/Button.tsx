@@ -11,11 +11,12 @@ type ButtonProps = {
     onClick?: () => void
     disabled?: boolean
     children?: ReactNode
+    className?: string
 }
 
-export const Button = ({ type, size, onClick, disabled = false, children }: ButtonProps) => {
+export const Button = ({ type, size, onClick, disabled = false, children, className }: ButtonProps) => {
     return (
-        <StyledButton type={type} size={size} onClick={onClick} disabled={disabled}>
+        <StyledButton className={className} type={type} size={size} onClick={onClick} disabled={disabled}>
             {children}
         </StyledButton>
     )
@@ -37,6 +38,7 @@ const StyledButton = styled.button<ButtonProps>`
       background-color: ${BgColors.default};
       font-size: ${sizes.fontSize};
       padding: ${sizes.padding};
+      line-height: ${sizes.lineHeight};
       border: ${getButtonBorder(props.type)};
 
       &:hover {
@@ -111,16 +113,19 @@ const getButtonSize = (size: Size) => {
             return {
                 fontSize: '0.875rem',
                 padding: '0.5625rem 1rem',
+                lineHeight: '0.875rem',
             }
         case 'md':
             return {
                 fontSize: '1rem',
                 padding: '0.625rem 1rem',
+                lineHeight: '1.25rem',
             }
         default:
             return {
                 fontSize: '1rem',
                 padding: '0.75rem 1rem',
+                lineHeight: '1.5rem'
             }
     }
 }

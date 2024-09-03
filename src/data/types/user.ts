@@ -1,11 +1,9 @@
 export interface User {
-    id: string
-    name: string
-    password: string
+    id: number
     email: string
 }
 
 export interface UserPokemons {
-    userId: string
+    userId: number
     pokemonIds: number[]
 }
